@@ -128,8 +128,19 @@ No music-generation model was available, so the music is synthesized in code: [`
 The cues were wired in with Web Audio, with an act-based detune of the company jingle and a mute control (`8b2a336`). Fixes since then:
 
 - **Shift-clear overlap**: the run bed played under the coin motif, jingles stacked, and the forfeit sting could play twice. The coin motif now plays alone (`9d1cb79`).
-- **"Keep shipping" not resetting shift progress**: being fixed at the time of writing.
-- **Mobile-friendly layout and PWA**: in progress at the time of writing.
+- **"Keep shipping" not resetting shift progress**: the delivery count now resets each shift, the C.O.D. target is the shift's starting bankroll + 100, and SHIFT CLEARED (with the coin motif) shows once per shift (`59ac194`, `?v=iso-6`).
+
+### 16. Mobile and PWA (Oct 30)
+
+The game became playable on phones and installable (`aa2f113`, `?v=iso-7`):
+
+- **Landscape first**, with a "Rotate your phone" prompt in portrait (dismissable for the session).
+- **Touch controls**: a floating joystick on the left half of the stage and a jump zone on the right; doors and tickets are tap targets.
+- **Compact layout** for short and narrow screens: smaller masthead and ledger, no ticker, and an iso stage that fills the screen.
+- **Quality tiers** (high / medium / low, forced with `?quality=`) that mostly cap the pixel ratio and shadow size.
+- **Installable PWA**: a manifest with Fen icons and a network-first service worker whose cache is keyed to the cache-bust suffix. `?sw=0` unregisters it.
+
+A follow-up added proper favicons (a root `favicon.ico` and 16 / 32 px Fen head crops, also on the mock pages) and small **Source** (GitHub) and **dataknife.ai** links on the title card, the ticker, and the compact masthead. The links are hidden during runs so they can't catch a stray tap (`?v=iso-8`).
 
 ## Decision log
 
@@ -154,6 +165,10 @@ The cues were wired in with Web Audio, with an act-based detune of the company j
 | Apache 2.0, public repo | Stay private | Open project; Three.js credited in `NOTICE` | Shipped |
 | Pages branch builds from `main` | Actions workflow | The configured workflow didn't exist | Shipped |
 | Music synthesized in code | Music models (ElevenLabs, Lyria, Suno, Udio, Stable Audio Open, MusicGen) | No model available; deterministic and license-clean | Shipped |
+| Shift progress resets on "Keep shipping" | — | SHIFT CLEARED fired on every run after the first clear; lifetime stats and bests still carry over | Shipped (`59ac194`) |
+| Landscape-first mobile with touch controls | — | The iso stage needs width; a floating stick works wherever the thumb lands | Shipped (`aa2f113`) |
+| Network-first PWA keyed to the cache-bust | — | Online players always get the deployed build; a bump replaces the cache | Shipped (`aa2f113`) |
+| Source / dataknife.ai links hidden during runs | — | No stray taps on touch devices while playing | Shipped |
 
 ## What was superseded and where it lives
 
@@ -177,4 +192,4 @@ The cues were wired in with Web Audio, with an act-based detune of the company j
 - **Renderer roadmap** ([`PLAN.md`](PLAN.md)): walk up to a door to bet instead of clicking; retire `js/platformer.js`; J.E.V. Phase 2 (`getOdds` provider abstraction) and Phase 3 (Jev endpoint, then `resolveRunSetup`).
 - **Progression** ([`PROGRESSION.md`](PROGRESSION.md)): shift quotas and the perk shop come first, then tiers, tools, and tool-aware odds, then calibration trust (which needs the player forecast). Quota curve, prices, and clearance thresholds are still open questions.
 - **Narrative** ([`NARRATIVE.md`](NARRATIVE.md)): act tags and text-only lore first, then mirror worlds, `data/lore.json`, the finale, and Phase 4 corrupted manifests. Whether the courier stays unnamed is still open.
-- **In flight at the time of writing**: the "Keep shipping" shift-progress reset, and mobile-friendly layout with PWA support.
+- **Mobile**: testing on real phones (so far mostly DevTools emulation), and whether iPhone Safari, which has no element fullscreen, needs more than the install route.
