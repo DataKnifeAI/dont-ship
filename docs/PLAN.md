@@ -1,7 +1,7 @@
 # D.O.N.T. Ship — Plan (iso direction)
 
 _Updated 2026-10-29. Supersedes the 2.5D side-scroller / painted-plate direction._
-_Progression, quotas, and why players keep opening doors: [`docs/PROGRESSION.md`](PROGRESSION.md)._
+_Progression, quotas, and why players keep opening doors: [`docs/PROGRESSION.md`](PROGRESSION.md). Story and theme: [`docs/NARRATIVE.md`](NARRATIVE.md). Current gameplay: [`docs/GAMEPLAY.md`](GAMEPLAY.md)._
 
 ## Locked decisions
 
