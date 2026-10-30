@@ -34,7 +34,7 @@ export function refreshLedger(state) {
   e.bankroll.textContent = Number(state.bankroll).toFixed(0);
   e.calibration.textContent = calibrationLabel(state);
   e.runs.textContent = String(state.runs);
-  e.deliveries.textContent = `${state.deliveries}/${GOALS.deliveriesTarget}`;
+  e.deliveries.textContent = `${state.shiftDeliveries}/${GOALS.deliveriesTarget}`;
 }
 
 export function renderBrief(manifest) {
@@ -56,7 +56,7 @@ export function renderBrief(manifest) {
 export function renderGoalLine(state) {
   const e = els();
   const g = goalProgress(state);
-  e.houseCopy.textContent = `Shift goal: ${g.bankrollTarget} C.O.D. · ${g.deliveriesTarget} deliveries · or survive ${g.executiveId}`;
+  e.houseCopy.textContent = `Shift ${g.shift} goal: ${g.bankrollTarget} C.O.D. · ${g.deliveriesTarget} deliveries · or survive ${g.executiveId}`;
   document.getElementById("memo-help").innerHTML =
     `<b>Low %</b> = harder universe · deliver more often than J.E.V. predicts → <b>+EV</b> · stake <b>${state.stake} C.O.D.</b> · click a door or <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd>`;
 }
@@ -676,7 +676,7 @@ export function resultsSummaryHtml(state, result) {
       <span>Peak <b>${Number(state.peakBankroll).toFixed(0)}</b></span>
       <span>Best <b>${Number(state.sessionBestBankroll).toFixed(0)}</b></span>
       <span>Best O.D.D.S. <b>${bestOdds}</b></span>
-      <span>Delivered <b>${state.deliveries}/${GOALS.deliveriesTarget}</b></span>
+      <span>Delivered <b>${state.shiftDeliveries}/${GOALS.deliveriesTarget}</b></span>
       <span>Runs <b>${state.runs}</b></span>
     </div>
   `;

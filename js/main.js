@@ -12,6 +12,7 @@ import {
   nextManifest,
   resetBankroll,
   resolveRun,
+  shiftTarget,
 } from "./state.js";
 import {
   bindControls,
@@ -161,7 +162,7 @@ function showTitle() {
     <dl class="title-bests">
       <div><dt>Best bankroll</dt><dd>${Number(state.sessionBestBankroll).toFixed(0)} C.O.D.</dd></div>
       <div><dt>Best O.D.D.S.</dt><dd>${bestOdds}</dd></div>
-      <div><dt>Shift goal</dt><dd>${GOALS.bankrollTarget} C.O.D. or ${GOALS.deliveriesTarget} deliveries</dd></div>
+      <div><dt>Shift goal</dt><dd>${shiftTarget(state)} C.O.D. or ${GOALS.deliveriesTarget} deliveries</dd></div>
     </dl>
   `,
     "title"
@@ -399,13 +400,13 @@ function showWin(result) {
       : "—";
   showOverlay(
     `
-    <div class="card-kicker">SHIFT REPORT · BOX 407-B</div>
+    <div class="card-kicker">SHIFT ${state.shift} REPORT · BOX 407-B</div>
     <div class="stamp-title win">SHIFT CLEARED</div>
     <p class="cause">${escape(state.winReason)}</p>
     <dl class="tally">
       <div><dt>Bankroll</dt><dd>${Number(state.bankroll).toFixed(0)} C.O.D.</dd></div>
       <div><dt>O.D.D.S.</dt><dd>${escape(calibrationLabel(state))}</dd></div>
-      <div><dt>Deliveries</dt><dd>${state.deliveries}</dd></div>
+      <div><dt>Deliveries</dt><dd>${state.shiftDeliveries} this shift · ${state.deliveries} total</dd></div>
     </dl>
     ${summary}
     <p class="fine">Local bests: ${Number(state.sessionBestBankroll).toFixed(0)} C.O.D. · O.D.D.S. ${bestOdds} (no online leaderboard yet)</p>

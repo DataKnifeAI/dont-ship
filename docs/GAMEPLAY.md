@@ -39,13 +39,13 @@ Cast: Fen (cute wolf) is the logo mark. Wally is the stork boss. The J.E.V. stam
 
 ## Goals
 
-Phase 1 session goals — any one clears the shift (`GOALS` in `js/state.js`):
+Phase 1 shift goals — any one clears the shift (`GOALS` in `js/state.js`):
 
-- Reach **200 C.O.D.**
-- Complete **5 deliveries**
+- Earn **100 C.O.D.** over the bankroll the shift started with (200 C.O.D. on the first shift)
+- Complete **5 deliveries** this shift
 - Survive the Executive manifest **`DN-1909-J`**
 
-After **SHIFT CLEARED** you can keep shipping or start a new shift at 100. If the bankroll can't cover the stake, Wally stamps your badge **INSUFFICIENT C.O.D.** and the bankroll resets to 100. Best bankroll and best O.D.D.S. are kept in `localStorage` as local bests (no online leaderboard yet).
+After **SHIFT CLEARED** you can **keep shipping**, which starts the next shift with your bankroll (the delivery count resets and the C.O.D. target becomes bankroll + 100, rounded up), or start a **new shift** at 100, which resets everything. The masthead **Delivered x/5** counter and the dispatch-bar goal line show the current shift. Runs, O.D.D.S., and local bests carry across shifts. If the bankroll can't cover the stake, Wally stamps your badge **INSUFFICIENT C.O.D.** and the bankroll resets to 100. Best bankroll and best O.D.D.S. are kept in `localStorage` as local bests (no online leaderboard yet).
 
 These flat goals are placeholders; [`PROGRESSION.md`](PROGRESSION.md) replaces them with shifts, quotas, and acts.
 

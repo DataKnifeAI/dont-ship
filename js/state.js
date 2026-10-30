@@ -12,9 +12,12 @@ export const PHASE = {
 const START_BANKROLL = 100;
 const DEFAULT_STAKE = 10;
 
-/** Phase 1 session goals (any one wins). */
+/**
+ * Phase 1 shift goals (any one clears the shift). The C.O.D. target is the
+ * bankroll the shift started with plus `codQuota` (200 on the first shift).
+ */
 export const GOALS = {
-  bankrollTarget: 200,
+  codQuota: 100,
   deliveriesTarget: 5,
   executiveManifestId: "DN-1909-J",
 };
@@ -29,6 +32,9 @@ export function createGameState() {
     stake: DEFAULT_STAKE,
     runs: 0,
     deliveries: 0,
+    shift: 1,
+    shiftStartBankroll: START_BANKROLL,
+    shiftDeliveries: 0,
     peakBankroll: START_BANKROLL,
     manifestIndex: 0,
     manifests: [],
@@ -92,6 +98,7 @@ export function resolveRun(state, survived) {
     payoutAmount = +(state.stake * payout).toFixed(2);
     state.bankroll = +(state.bankroll + payoutAmount).toFixed(2);
     state.deliveries += 1;
+    state.shiftDeliveries += 1;
   }
 
   if (state.bankroll > state.peakBankroll) state.peakBankroll = state.bankroll;
@@ -119,11 +126,15 @@ export function resolveRun(state, survived) {
   return state.lastResult;
 }
 
+export function shiftTarget(state) {
+  return Math.ceil(state.shiftStartBankroll + GOALS.codQuota);
+}
+
 function checkWin(state, survived, manifestId) {
-  if (state.bankroll >= GOALS.bankrollTarget) {
-    return `Reached ${GOALS.bankrollTarget} C.O.D.`;
+  if (state.bankroll >= shiftTarget(state)) {
+    return `Reached ${shiftTarget(state)} C.O.D.`;
   }
-  if (state.deliveries >= GOALS.deliveriesTarget) {
+  if (state.shiftDeliveries >= GOALS.deliveriesTarget) {
     return `Completed ${GOALS.deliveriesTarget} deliveries`;
   }
   if (survived && manifestId === GOALS.executiveManifestId) {
@@ -141,8 +152,12 @@ export function afterResult(state) {
   state.phase = PHASE.INTAKE;
 }
 
+/** Keep shipping: the next shift starts from the current bankroll. */
 export function continueAfterWin(state) {
   state.winReason = null;
+  state.shift += 1;
+  state.shiftStartBankroll = state.bankroll;
+  state.shiftDeliveries = 0;
   if (state.bankroll < state.stake) {
     state.phase = PHASE.BROKE;
     return;
@@ -156,6 +171,9 @@ export function resetBankroll(state) {
   state.outcomes = [];
   state.runs = 0;
   state.deliveries = 0;
+  state.shift = 1;
+  state.shiftStartBankroll = START_BANKROLL;
+  state.shiftDeliveries = 0;
   state.peakBankroll = START_BANKROLL;
   state.manifestIndex = 0;
   state.currentManifest = null;
@@ -208,9 +226,10 @@ function persistBests(state) {
 
 export function goalProgress(state) {
   return {
+    shift: state.shift,
     bankroll: state.bankroll,
-    bankrollTarget: GOALS.bankrollTarget,
-    deliveries: state.deliveries,
+    bankrollTarget: shiftTarget(state),
+    deliveries: state.shiftDeliveries,
     deliveriesTarget: GOALS.deliveriesTarget,
     executiveId: GOALS.executiveManifestId,
     atExecutive: state.currentManifest?.manifestId === GOALS.executiveManifestId,

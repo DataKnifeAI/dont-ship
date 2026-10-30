@@ -4,7 +4,7 @@ _Drafted 2026-10-29. Companion to `docs/PLAN.md` (renderer/roadmap). This doc co
 
 ## Problem
 
-Phase 1 session goals are flat: any one of 200 C.O.D., 5 deliveries, or surviving the Executive manifest (`DN-1909-J`) "wins" (`GOALS` in `js/state.js`). Nothing escalates, nothing carries over, and there is no reason to pick a harder door beyond curiosity. We need **pressure inside a run** and **growth across runs**.
+Phase 1 shift goals are flat: any one of +100 C.O.D. over the shift's starting bankroll, 5 deliveries in the shift, or surviving the Executive manifest (`DN-1909-J`) clears the shift (`GOALS` in `js/state.js`); Keep shipping starts the next shift with the same goals. Nothing escalates, nothing carries over, and there is no reason to pick a harder door beyond curiosity. We need **pressure inside a run** and **growth across runs**.
 
 ## Terms
 
