@@ -1,0 +1,11 @@
+D.O.N.T. Ship
+Copyright 2026 DataKnifeAI
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product bundles third-party software:
+
+  three.js (vendor/three.module.js, vendor/three.core.js)
+  Copyright © 2010-2026 three.js authors
+  Licensed under the MIT License (see vendor/three.LICENSE)
+  https://threejs.org/

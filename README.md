@@ -96,3 +96,9 @@ Vanilla JS + Canvas, plus vendored Three.js for iso runs. No frameworks, no buil
 | `assets/brand/` | Fen / Wally art (see that folder’s README) |
 | `assets/mocks/25d/` | 2.5D direction stills + README |
 | `mocks/25d-preview.html` | Static gallery for those stills |
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). Copyright 2026 DataKnifeAI; see [NOTICE](NOTICE).
+
+Bundled third-party software: Three.js in `vendor/` is MIT-licensed ([vendor/three.LICENSE](vendor/three.LICENSE)).
