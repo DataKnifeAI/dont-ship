@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>D.O.N.T. Ship — Iso preview (mock)</title>
+  <script type="importmap">
+    { "imports": { "three": "../vendor/three.module.js" } }
+  </script>
+  <style>
+    :root {
+      --avocado: #568203;
+      --harvest: #daa520;
+      --burnt: #cc5500;
+      --cream: #f5ecd7;
+      --ibm: #1f4e79;
+      --ink: #1a1f16;
+    }
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+      color: var(--ink);
+    }
+    body {
+      background: radial-gradient(ellipse at 50% 35%, #fbf4e2 0%, #efe0bd 55%, #d9c497 100%);
+      transition: background 0.4s;
+    }
+    body.space {
+      background: radial-gradient(ellipse at 60% 30%, #2a2f5c 0%, #141a3a 50%, #070a1a 100%);
+    }
+    #view { position: fixed; inset: 0; display: block; }
+
+    .hud {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      min-width: 300px;
+      background: var(--cream);
+      border: 3px solid var(--ink);
+      box-shadow: 5px 5px 0 rgba(26, 31, 22, 0.35);
+      padding: 10px 14px 12px;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+    }
+    .hud .brand {
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--burnt);
+      border-bottom: 2px solid var(--harvest);
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .hud .universe {
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: 0.06em;
+      color: var(--ibm);
+      text-transform: uppercase;
+    }
+    .hud .row { margin-top: 3px; font-family: "Courier New", monospace; font-size: 12px; }
+    .hud .tags span {
+      display: inline-block;
+      margin: 4px 4px 0 0;
+      padding: 1px 6px;
+      border: 2px solid var(--burnt);
+      color: var(--burnt);
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      font-size: 11px;
+      transform: rotate(-1.5deg);
+    }
+    .hud .parcel { margin-top: 8px; font-weight: 700; font-size: 14px; }
+    .hud .parcel b { padding: 1px 6px; color: var(--cream); background: var(--avocado); }
+    .hud .parcel b.bad { background: #8b1e1e; }
+    .hud .parcel b.good { background: var(--harvest); color: var(--ink); }
+
+    .keys {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(245, 236, 215, 0.92);
+      border: 2px solid var(--ink);
+      padding: 6px 14px;
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .keys kbd {
+      border: 1px solid var(--ink);
+      border-bottom-width: 2px;
+      padding: 0 4px;
+      background: #fff8e8;
+      font-family: inherit;
+    }
+    .stamp {
+      position: fixed;
+      top: 38%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-6deg) scale(0.6);
+      opacity: 0;
+      padding: 10px 26px;
+      border: 5px solid var(--burnt);
+      color: var(--burnt);
+      background: rgba(245, 236, 215, 0.88);
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      font-size: 34px;
+      letter-spacing: 0.1em;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .stamp small { display: block; font-size: 13px; letter-spacing: 0.05em; }
+    .stamp.show { opacity: 1; transform: translate(-50%, -50%) rotate(-6deg) scale(1); }
+    .stamp.good { border-color: var(--avocado); color: var(--avocado); }
+    .tag {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      font-family: "Courier New", monospace;
+      font-size: 11px;
+      padding: 4px 8px;
+      background: var(--ibm);
+      color: var(--cream);
+      border: 2px solid var(--ink);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="view"></canvas>
+
+  <div class="hud">
+    <div class="brand">D.O.N.T. SHIP · BOX 407-B · COURIER RUN</div>
+    <div class="universe" id="hud-universe">—</div>
+    <div class="row" id="hud-manifest">—</div>
+    <div class="row" id="hud-odds">—</div>
+    <div class="tags" id="hud-tags"></div>
+    <div class="parcel">PARCEL: <b id="hud-parcel">IN TRANSIT</b></div>
+  </div>
+
+  <div class="tag">ISO MOCK · NOT WIRED TO GAME</div>
+
+  <div class="keys">
+    <kbd>WASD</kbd>/<kbd>↑←↓→</kbd> move · <kbd>Space</kbd> jump · <kbd>1</kbd> porch · <kbd>2</kbd> deep space · <kbd>R</kbd> reset
+  </div>
+
+  <div class="stamp" id="stamp"></div>
+
+  <script type="module" src="./iso-preview.js"></script>
+</body>
+</html>

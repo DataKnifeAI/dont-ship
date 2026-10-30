@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>D.O.N.T. Ship — 2.5D mocks</title>
+    <style>
+      :root {
+        --avocado: #568203;
+        --harvest: #daa520;
+        --burnt: #cc5500;
+        --cream: #f5ecd7;
+        --ink: #1a1f16;
+        --ibm: #1f4e79;
+        --panel: #efe4c8;
+        --shadow: rgba(26, 31, 22, 0.18);
+        --font-display: "Courier New", "Lucida Console", monospace;
+        --font-body: "Trebuchet MS", "Gill Sans", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100%;
+        color: var(--ink);
+        font-family: var(--font-body);
+        background:
+          radial-gradient(circle at 20% 10%, rgba(218, 165, 32, 0.25), transparent 40%),
+          radial-gradient(circle at 80% 0%, rgba(86, 130, 3, 0.2), transparent 35%),
+          linear-gradient(160deg, #e8d9b5 0%, var(--cream) 45%, #d7c7a2 100%);
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 1.25rem 1.25rem 2.5rem;
+      }
+
+      header {
+        border-bottom: 3px double var(--ibm);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        letter-spacing: 0.04em;
+        font-size: 1.55rem;
+        color: var(--ibm);
+      }
+
+      .lede {
+        margin: 0.4rem 0 0;
+        max-width: 42rem;
+        line-height: 1.45;
+      }
+
+      .back {
+        display: inline-block;
+        margin-top: 0.65rem;
+        color: var(--ibm);
+        font-weight: 600;
+      }
+
+      .swatches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .swatches li {
+        width: 1.35rem;
+        height: 1.35rem;
+        border: 2px solid var(--ink);
+        box-shadow: 2px 2px 0 var(--shadow);
+      }
+
+      .swatches .avocado {
+        background: var(--avocado);
+      }
+      .swatches .harvest {
+        background: var(--harvest);
+      }
+      .swatches .burnt {
+        background: var(--burnt);
+      }
+      .swatches .cream {
+        background: var(--cream);
+      }
+      .swatches .ibm {
+        background: var(--ibm);
+      }
+
+      figure {
+        margin: 0 0 1.5rem;
+        background: var(--panel);
+        border: 2px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--shadow);
+        padding: 0.65rem;
+      }
+
+      figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid rgba(26, 31, 22, 0.25);
+        background: #cfc0a0;
+      }
+
+      figcaption {
+        margin-top: 0.55rem;
+        padding: 0 0.15rem 0.15rem;
+      }
+
+      figcaption strong {
+        display: block;
+        font-family: var(--font-display);
+        color: var(--ibm);
+        letter-spacing: 0.03em;
+        margin-bottom: 0.2rem;
+      }
+
+      figcaption span {
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      footer {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        border-top: 2px solid rgba(31, 78, 121, 0.35);
+        padding-top: 0.75rem;
+        color: #3a4034;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>D.O.N.T. Ship — 2.5D mocks</h1>
+        <p class="lede">
+          Visual direction only: layered depth for the Box 407-B hub and pocket-universe runs.
+          No game logic here — see <code>assets/mocks/25d/README.md</code>.
+        </p>
+        <a class="back" href="../index.html">← Back to game</a>
+        <ul class="swatches" aria-label="Brand palette">
+          <li class="avocado" title="Avocado"></li>
+          <li class="harvest" title="Harvest gold"></li>
+          <li class="burnt" title="Burnt orange"></li>
+          <li class="cream" title="Cream"></li>
+          <li class="ibm" title="IBM blue"></li>
+        </ul>
+      </header>
+
+      <figure>
+        <img
+          src="../assets/mocks/25d/hub-box-407b-25d.jpg"
+          width="1280"
+          height="720"
+          alt="2.5D mock of Box 407-B hall with three stamped doors and small Wally"
+        />
+        <figcaption>
+          <strong>Hub — Box 407-B</strong>
+          <span
+            >Doorway hall with literal depth: three stake-stamped doors, mid-century corporate
+            fixtures, Fen seal optional, Wally small as supervisor NPC.</span
+          >
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img
+          src="../assets/mocks/25d/universe-porch-25d.jpg"
+          width="1280"
+          height="720"
+          alt="2.5D mock of suburban porch delivery with courier and OUT stamp"
+        />
+        <figcaption>
+          <strong>Universe run A — Porch / neighborhood</strong>
+          <span
+            >Parallax language: foreground props, mid play plane (courier + package), background
+            street; customer OUT / RCPT as the goal.</span
+          >
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img
+          src="../assets/mocks/25d/universe-space-25d.jpg"
+          width="1280"
+          height="720"
+          alt="2.5D mock of deep-space docklet delivery with same layer language"
+        />
+        <figcaption>
+          <strong>Universe run B — Deep space docklet</strong>
+          <span
+            >Same 2.5D layer grammar in a wilder biome so multiverse variety stays readable without
+            leaving the brand palette.</span
+          >
+        </figcaption>
+      </figure>
+
+      <footer>
+        Phase 1.5 recommendation: Canvas parallax layers first; Three.js only if depth needs outgrow
+        2D draw. Controls and J.E.V. (odds-only) unchanged.
+      </footer>
+    </main>
+  </body>
+</html>
