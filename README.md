@@ -8,6 +8,10 @@ Tone: cheerful corporate dystopia over cosmic nonsense (Futurama / What-If energ
 
 Fen (cute wolf) is the logo mark. Wally is the stork boss. The J.E.V. stamps outcomes upstairs.
 
+## Play online
+
+[https://ds.dataknife.ai](https://ds.dataknife.ai) (GitHub Pages from `main`).
+
 ## Play locally
 
 ES modules and `fetch` need a static HTTP server (opening `index.html` as a file will fail).
