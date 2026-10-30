@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>D.O.N.T. Ship — music mocks</title>
+    <style>
+      :root {
+        --avocado: #568203;
+        --harvest: #daa520;
+        --burnt: #cc5500;
+        --cream: #f5ecd7;
+        --ink: #1a1f16;
+        --ibm: #1f4e79;
+        --panel: #efe4c8;
+        --shadow: rgba(26, 31, 22, 0.18);
+        --font-display: "Courier New", "Lucida Console", monospace;
+        --font-body: "Trebuchet MS", "Gill Sans", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100%;
+        color: var(--ink);
+        font-family: var(--font-body);
+        background:
+          radial-gradient(circle at 20% 10%, rgba(218, 165, 32, 0.25), transparent 40%),
+          radial-gradient(circle at 80% 0%, rgba(86, 130, 3, 0.2), transparent 35%),
+          linear-gradient(160deg, #e8d9b5 0%, var(--cream) 45%, #d7c7a2 100%);
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 1.25rem 1.25rem 2.5rem;
+      }
+
+      header {
+        border-bottom: 3px double var(--ibm);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        letter-spacing: 0.04em;
+        font-size: 1.55rem;
+        color: var(--ibm);
+      }
+
+      h2 {
+        font-family: var(--font-display);
+        color: var(--burnt);
+        font-size: 1.05rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin: 1.75rem 0 0.75rem;
+      }
+
+      .lede {
+        margin: 0.4rem 0 0;
+        max-width: 42rem;
+        line-height: 1.45;
+      }
+
+      .back {
+        display: inline-block;
+        margin-top: 0.65rem;
+        color: var(--ibm);
+        font-weight: 600;
+      }
+
+      .swatches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .swatches li {
+        width: 1.35rem;
+        height: 1.35rem;
+        border: 2px solid var(--ink);
+        box-shadow: 2px 2px 0 var(--shadow);
+      }
+
+      .swatches .avocado {
+        background: var(--avocado);
+      }
+      .swatches .harvest {
+        background: var(--harvest);
+      }
+      .swatches .burnt {
+        background: var(--burnt);
+      }
+      .swatches .cream {
+        background: var(--cream);
+      }
+      .swatches .ibm {
+        background: var(--ibm);
+      }
+
+      .card {
+        margin: 0 0 1.1rem;
+        background: var(--panel);
+        border: 2px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--shadow);
+        padding: 0.75rem 0.85rem 0.85rem;
+      }
+
+      .card header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.75rem;
+        border: 0;
+        padding: 0;
+        margin: 0 0 0.35rem;
+      }
+
+      .card strong {
+        font-family: var(--font-display);
+        color: var(--ibm);
+        letter-spacing: 0.03em;
+        font-size: 1.05rem;
+      }
+
+      .tag {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.05rem 0.4rem;
+        border: 2px solid var(--ink);
+        background: var(--harvest);
+      }
+
+      .tag.loop {
+        background: var(--avocado);
+        color: var(--cream);
+      }
+
+      .tag.sting {
+        background: var(--burnt);
+        color: var(--cream);
+      }
+
+      .meta {
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        color: #4a5040;
+      }
+
+      .card p {
+        margin: 0.25rem 0 0.6rem;
+        line-height: 1.45;
+        font-size: 0.95rem;
+      }
+
+      .card p.how {
+        font-size: 0.85rem;
+        color: #3a4034;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      audio {
+        width: min(100%, 26rem);
+      }
+
+      button {
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        padding: 0.35rem 0.65rem;
+        border: 2px solid var(--ink);
+        background: var(--cream);
+        color: var(--ibm);
+        box-shadow: 2px 2px 0 var(--shadow);
+        cursor: pointer;
+      }
+
+      button[aria-pressed="true"] {
+        background: var(--ibm);
+        color: var(--cream);
+      }
+
+      .note {
+        font-size: 0.82rem;
+        color: #4a5040;
+      }
+
+      footer {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        border-top: 2px solid rgba(31, 78, 121, 0.35);
+        padding-top: 0.75rem;
+        color: #3a4034;
+        line-height: 1.45;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>D.O.N.T. Ship — music mocks</h1>
+        <p class="lede">
+          Short cues synthesized in code (no samples, no music model) by
+          <code>tools/music/compose.py</code>. Mock-first: nothing here is wired into the game yet. Loops are
+          rendered circularly, so their last sample flows into the first.
+        </p>
+        <a class="back" href="../index.html">← Back to game</a>
+        <ul class="swatches" aria-label="Brand palette">
+          <li class="avocado" title="Avocado"></li>
+          <li class="harvest" title="Harvest gold"></li>
+          <li class="burnt" title="Burnt orange"></li>
+          <li class="cream" title="Cream"></li>
+          <li class="ibm" title="IBM blue"></li>
+        </ul>
+      </header>
+
+      <h2>Company jingle</h2>
+
+      <section class="card">
+        <header>
+          <strong>jingle-dock</strong>
+          <span class="tag">Jingle</span>
+          <span class="meta">15.4 s · C major · 132 BPM swing</span>
+        </header>
+        <p>
+          "D.O.N.T. Ship — Delivering Outcomes, Not Timelines," as piped onto the Dock: cheerful, clean, on
+          time (allegedly).
+        </p>
+        <p class="how">
+          Vibraphone melody, drawbar organ comping, walking upright bass, brushes and ride. Eight bars of
+          I–vi–ii–V / iii–VI–ii–V turnarounds, ending on a tidy C6/9 with a band "button."
+        </p>
+        <div class="controls">
+          <audio controls preload="none">
+            <source src="../assets/audio/jingle-dock.ogg" type="audio/ogg" />
+            <source src="../assets/audio/jingle-dock.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </section>
+
+      <section class="card">
+        <header>
+          <strong>jingle-executive</strong>
+          <span class="tag">Jingle</span>
+          <span class="meta">19.5 s · same tune · 112 BPM · detuned</span>
+        </header>
+        <p>
+          The same jingle heard on the Executive floor, deep in the building, where it has started to sound
+          like it knows something.
+        </p>
+        <p class="how">
+          The melody is the same, but every chord is bent a little wrong (maj7 → aug-maj7, m7 → m(maj7), V7 →
+          7♭9, tritone sub), with a detuned organ chorus, a theremin shadow an octave down, tape wow and
+          flutter, and a droop on the final C minor-major 9.
+        </p>
+        <div class="controls">
+          <audio controls preload="none">
+            <source src="../assets/audio/jingle-executive.ogg" type="audio/ogg" />
+            <source src="../assets/audio/jingle-executive.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </section>
+
+      <h2>Box 407-B</h2>
+
+      <section class="card">
+        <header>
+          <strong>hub-ambience-loop</strong>
+          <span class="tag loop">Loop</span>
+          <span class="meta">16.0 s · F · 60 BPM · 4 bars</span>
+        </header>
+        <p>
+          The door hall between runs: waiting-room calm while the J.E.V. beeps and dot-matrix-prints the
+          odds for the next three doors.
+        </p>
+        <p class="how">
+          Soft pad and flute-drawbar organ on Fmaj9 – Dm9 – B♭maj7♯11 – C9sus4, a theremin-lite phrase ("I
+          compute… you choose"), a wall clock, and printer bursts in bars 2 and 4.
+        </p>
+        <div class="controls">
+          <audio controls loop preload="none">
+            <source src="../assets/audio/hub-ambience-loop.ogg" type="audio/ogg" />
+            <source src="../assets/audio/hub-ambience-loop.mp3" type="audio/mpeg" />
+          </audio>
+          <button type="button" data-gapless="../assets/audio/hub-ambience-loop.ogg" aria-pressed="false">
+            Gapless loop
+          </button>
+        </div>
+        <p class="note">Play loop: it repeats forever. "Gapless loop" uses Web Audio, the way the game would.</p>
+      </section>
+
+      <h2>Two sides of the same coin</h2>
+
+      <section class="card">
+        <header>
+          <strong>coin-motif</strong>
+          <span class="tag">Motif</span>
+          <span class="meta">16.5 s · D major → B minor · 92 BPM</span>
+        </header>
+        <p>
+          The C.O.D. coin: one phrase heard as SAVE HUMANITY, a coin flip, then the same notes heard as END
+          JOBS FOR PROFIT. The tech didn't change; only the harmony around it did.
+        </p>
+        <p class="how">
+          The same nine melody notes both times. First pass: warm brass and vibes over D – Gadd9 – Em7 – A7 – D.
+          Coin flick, spin, landing wobble. Second pass: cold FM glass over Bm7 – Em11 – Cmaj7♯11 –
+          F♯7♭9 – Bm(add9), with a counting-machine tick.
+        </p>
+        <div class="controls">
+          <audio controls preload="none">
+            <source src="../assets/audio/coin-motif.ogg" type="audio/ogg" />
+            <source src="../assets/audio/coin-motif.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </section>
+
+      <h2>Pocket-universe runs</h2>
+
+      <section class="card">
+        <header>
+          <strong>run-porch-loop</strong>
+          <span class="tag loop">Loop</span>
+          <span class="meta">16.0 s · F major · 120 BPM · 8 bars</span>
+        </header>
+        <p>Suburban porch delivery: an upbeat lounge / exotica groove with a chiptune lead, so you can find OUT / RCPT.</p>
+        <p class="how">
+          Bossa upright, bongos, shaker, 3-2 son clave, vibes comping, a 25% pulse lead doubled by vibes, and
+          a 16th-note chip arpeggio with dotted-eighth echo. Fmaj7 – ii–V – iii–VI – ii–V – Fmaj7 – B♭maj7 –
+          iii–VI – ii–V.
+        </p>
+        <div class="controls">
+          <audio controls loop preload="none">
+            <source src="../assets/audio/run-porch-loop.ogg" type="audio/ogg" />
+            <source src="../assets/audio/run-porch-loop.mp3" type="audio/mpeg" />
+          </audio>
+          <button type="button" data-gapless="../assets/audio/run-porch-loop.ogg" aria-pressed="false">
+            Gapless loop
+          </button>
+        </div>
+        <p class="note">Play loop: it repeats forever.</p>
+      </section>
+
+      <section class="card">
+        <header>
+          <strong>run-space-loop</strong>
+          <span class="tag loop">Loop</span>
+          <span class="meta">19.2 s · D minor · 100 BPM · 8 bars · optional</span>
+        </header>
+        <p>Deep-space docklet variant: same lounge DNA, more vacuum. The theremin takes the melody on the second pass.</p>
+        <p class="how">
+          Dm9 – B♭maj7♯11 – Gm9 – A7sus4 / A7♭9 twice. Pulsing octave synth bass, ping-pong chip arpeggios,
+          sonar pings, soft kick, brushes and hats, a vibes counter-line, and a long reverb.
+        </p>
+        <div class="controls">
+          <audio controls loop preload="none">
+            <source src="../assets/audio/run-space-loop.ogg" type="audio/ogg" />
+            <source src="../assets/audio/run-space-loop.mp3" type="audio/mpeg" />
+          </audio>
+          <button type="button" data-gapless="../assets/audio/run-space-loop.ogg" aria-pressed="false">
+            Gapless loop
+          </button>
+        </div>
+        <p class="note">Play loop: it repeats forever.</p>
+      </section>
+
+      <h2>Stingers</h2>
+
+      <section class="card">
+        <header>
+          <strong>sting-delivered</strong>
+          <span class="tag sting">Sting</span>
+          <span class="meta">3.0 s · C major</span>
+        </header>
+        <p>Parcel handed to the customer: the outcome was delivered, the timeline was not.</p>
+        <p class="how">
+          A brass G–C–E–G pickup into a C major chord with a vibes sparkle, then the register: two bell
+          strikes, the drawer's ka-chunk, and coins settling.
+        </p>
+        <div class="controls">
+          <audio controls preload="none">
+            <source src="../assets/audio/sting-delivered.ogg" type="audio/ogg" />
+            <source src="../assets/audio/sting-delivered.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </section>
+
+      <section class="card">
+        <header>
+          <strong>sting-forfeit</strong>
+          <span class="tag sting">Sting</span>
+          <span class="meta">3.0 s · G</span>
+        </header>
+        <p>Run forfeited: the stake goes upstairs, and the facility sounds its regrets.</p>
+        <p class="how">
+          Two rising 1970s sci-fi klaxon whoops, then a plunger-muted trombone B♭–A–A♭–G "wah wah wah
+          waaah" with vibrato and a final droop.
+        </p>
+        <div class="controls">
+          <audio controls preload="none">
+            <source src="../assets/audio/sting-forfeit.ogg" type="audio/ogg" />
+            <source src="../assets/audio/sting-forfeit.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </section>
+
+      <footer>
+        Regenerate with <code>python3 tools/music/compose.py</code> (numpy + ffmpeg); details in
+        <code>tools/music/README.md</code>. The OGG files are the loop masters. The MP3s are a fallback for
+        browsers without Vorbis, and their encoder padding adds a small gap when looped.
+      </footer>
+    </main>
+    <script>
+      let ctx = null;
+      let current = null;
+      const buffers = new Map();
+
+      function stop() {
+        if (!current) return;
+        current.source.stop();
+        current.button.setAttribute("aria-pressed", "false");
+        current = null;
+      }
+
+      document.querySelectorAll("[data-gapless]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const wasPlaying = current && current.button === button;
+          stop();
+          if (wasPlaying) return;
+          ctx = ctx || new AudioContext();
+          await ctx.resume();
+          const url = button.dataset.gapless;
+          if (!buffers.has(url)) {
+            const data = await (await fetch(url)).arrayBuffer();
+            buffers.set(url, await ctx.decodeAudioData(data));
+          }
+          document.querySelectorAll("audio").forEach((a) => a.pause());
+          const source = ctx.createBufferSource();
+          source.buffer = buffers.get(url);
+          source.loop = true;
+          source.connect(ctx.destination);
+          source.start();
+          current = { source, button };
+          button.setAttribute("aria-pressed", "true");
+        });
+      });
+
+      document.querySelectorAll("audio").forEach((audio) => {
+        audio.addEventListener("play", () => {
+          stop();
+          document.querySelectorAll("audio").forEach((other) => other !== audio && other.pause());
+        });
+      });
+    </script>
+  </body>
+</html>
