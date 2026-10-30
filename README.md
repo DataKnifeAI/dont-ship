@@ -24,6 +24,7 @@ Then open [http://localhost:8080](http://localhost:8080).
 
 - **Door hall:** click a door, or press **1 / 2 / 3**.
 - **Run:** **WASD / arrows** to move, **Space** to jump, mouse wheel to zoom.
+- **Sound:** **M** mutes (or use the speaker button in the masthead).
 - No WebGL? Add `?renderer=2d` for the legacy 2D version.
 
 ## Docs

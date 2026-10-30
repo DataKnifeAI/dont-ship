@@ -39,6 +39,18 @@ import {
   showOverlay,
 } from "./ui.js";
 import { art, preloadArt } from "./art.js";
+import {
+  HUB_CUE,
+  audioStatus,
+  mountAudioControls,
+  playJingle,
+  playMusic,
+  playSting,
+  runCueFor,
+  stopMusic,
+  toggleMute,
+  unlock as unlockAudio,
+} from "./audio.js";
 import { createHub, hasIsoWorld, isoAvailable, startRun as startIsoRun } from "./iso/index.js";
 
 const params = new URLSearchParams(location.search);
@@ -62,6 +74,8 @@ let hoverDoor = -1;
 let hub = null;
 /** The door picked for the current run: { door, index }. */
 let lastPick = null;
+/** Act whose jingle last played; null replays the jingle on the next hub visit (new shift). */
+let jingleAct = null;
 
 async function boot() {
   const e = els();
@@ -70,6 +84,10 @@ async function boot() {
 
   bindControls();
   bindCanvasInput(e.canvas);
+  mountAudioControls(document.getElementById("audio-ctl"));
+  for (const type of ["pointerdown", "keydown"]) {
+    window.addEventListener(type, unlockAudio, { once: true, capture: true });
+  }
 
   try {
     const [manifests, rooms] = await Promise.all([
@@ -153,6 +171,7 @@ function showTitle() {
 
 function clockIn() {
   if (state.phase !== PHASE.BOOT) return;
+  unlockAudio();
   hideOverlay();
   hub?.setFraming("hub");
   beginIntake();
@@ -184,6 +203,7 @@ function beginIntake() {
     return;
   }
   const m = state.currentManifest;
+  cueHub(m);
   renderBrief(m);
   renderDoors(m, {
     enabled: true,
@@ -200,6 +220,21 @@ function beginIntake() {
   activeRun = null;
   hoverDoor = -1;
   intakeFrame = 0;
+}
+
+function actOf(manifest) {
+  return manifest?.act || (manifest?.modifiers?.includes("executive") ? "executive" : "dock");
+}
+
+/** Hub bed, preceded by the company jingle whenever the act changes. */
+function cueHub(manifest) {
+  const act = actOf(manifest);
+  if (act !== jingleAct) {
+    jingleAct = act;
+    playJingle(act, { then: HUB_CUE });
+  } else {
+    playMusic(HUB_CUE);
+  }
 }
 
 function pickDoor(door, index = -1) {
@@ -245,6 +280,7 @@ function pickDoor(door, index = -1) {
   const start2d = () => {
     hub?.hide();
     setScreen("run");
+    playMusic(runCueFor(templateName));
     const zone = state.currentManifest.zone || "dock";
     activeRun = createRun(template, rng, door.difficultyTier || "easy", zone);
     setFragile(activeRun, fragile);
@@ -259,6 +295,7 @@ function pickDoor(door, index = -1) {
     if (state.phase !== PHASE.RUN) return;
     hub?.hide();
     setScreen("run");
+    playMusic(runCueFor(templateName));
     startIsoRun({ ...template, id: templateName }, seed, {
       stage: els().stage,
       tier: door.difficultyTier || "easy",
@@ -293,10 +330,13 @@ function finishRun(survived, cause = null) {
   setScreen("result");
 
   if (state.phase === PHASE.WIN) {
+    playMusic("coin-motif", { then: HUB_CUE });
     showWin(result);
     return;
   }
 
+  playMusic(HUB_CUE);
+  playSting(survived ? "sting-delivered" : "sting-forfeit");
   showRunResult(result, cause);
 }
 
@@ -384,6 +424,7 @@ function showWin(result) {
     hideOverlay();
     resetBankroll(state);
     refreshLedger(state);
+    jingleAct = null;
     beginIntake();
   });
 }
@@ -391,6 +432,8 @@ function showWin(result) {
 function showBroke() {
   setScreen("result");
   hub?.setInteractive(false);
+  stopMusic(1.2);
+  playSting("sting-forfeit");
   const summary = resultsSummaryHtml(state, state.lastResult);
   showOverlay(
     `
@@ -406,11 +449,16 @@ function showBroke() {
     hideOverlay();
     resetBankroll(state);
     refreshLedger(state);
+    jingleAct = null;
     beginIntake();
   });
 }
 
 function onGlobalKey(e) {
+  if (e.code === "KeyM" && !e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    toggleMute();
+    return;
+  }
   if (state.phase === PHASE.BOOT && e.code === "Enter" && document.getElementById("start-btn")) {
     e.preventDefault();
     clockIn();
@@ -453,6 +501,7 @@ window.__dontShip = {
     return hub;
   },
   worlds: () => Object.keys(state.rooms),
+  audio: audioStatus,
   play(world, { tier = "easy", tags = ["none"], fragile = false } = {}) {
     if (state.phase !== PHASE.INTAKE || !state.currentManifest) return `not at the door hub (phase ${state.phase})`;
     hideOverlay();

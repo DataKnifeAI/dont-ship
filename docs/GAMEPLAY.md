@@ -29,6 +29,7 @@ Cast: Fen (cute wolf) is the logo mark. Wally is the stork boss. The J.E.V. stam
 | Door hall | Click a door or its ticket, or **1 / 2 / 3** |
 | Iso run | **WASD / arrows** move in 8 directions, **Space** jumps (up to 2 levels, or across a 1-tile gap), mouse wheel zooms |
 | Legacy 2D run (`?renderer=2d`) | **← / →** move, **↑ / ↓** change depth lane, **Space** jump |
+| Anywhere | **M** mutes or unmutes sound (also the speaker button in the masthead; **▾** next to it sets music / SFX levels) |
 
 ## Odds, payout, and O.D.D.S.
 

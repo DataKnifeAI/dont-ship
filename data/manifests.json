@@ -2,6 +2,7 @@
   {
     "manifestId": "DN-1001-A",
     "zone": "hub",
+    "act": "dock",
     "brief": "ROUTING MEMO: Training parcel. Box 407-B doorways dump you into pocket universes. Deliver to the named recipient on the far side. Timing remains a distribution.",
     "modifiers": [],
     "doors": [
@@ -34,6 +35,7 @@
   {
     "manifestId": "DN-1120-B",
     "zone": "hub",
+    "act": "dock",
     "brief": "PRIORITY: Recipient listed as 'definitely a person.' Universe may disagree. Hand off the parcel; argue later.",
     "modifiers": [],
     "doors": [
@@ -66,6 +68,7 @@
   {
     "manifestId": "DN-1204-C",
     "zone": "hub",
+    "act": "dock",
     "brief": "FRAGILE: CONTAINS A POSSIBILITY. Do not drop, shake, or explain to a Meeseeks. Deliver intact.",
     "modifiers": ["fragile"],
     "doors": [
@@ -98,6 +101,7 @@
   {
     "manifestId": "DN-1337-D",
     "zone": "hub",
+    "act": "sorting",
     "brief": "Memo scrap: 'When you do things right, couriers won't be sure which universe did anything at all.' Still get a signature.",
     "modifiers": [],
     "doors": [
@@ -130,6 +134,7 @@
   {
     "manifestId": "DN-1402-E",
     "zone": "hub",
+    "act": "sorting",
     "brief": "Inter-universe transfer. Signature line: 'N/A (probabilistic).' Customer still expects the box.",
     "modifiers": [],
     "doors": [
@@ -162,6 +167,7 @@
   {
     "manifestId": "DN-1515-F",
     "zone": "hub",
+    "act": "sorting",
     "brief": "STATISTICALLY URGENT. Find the customer before this distribution collapses into a sitcom.",
     "modifiers": [],
     "doors": [
@@ -194,6 +200,7 @@
   {
     "manifestId": "DN-1608-G",
     "zone": "hub",
+    "act": "cold",
     "brief": "Cold-route pull across universes you have not visited. J.E.V. insists déjà vu is a supported feature.",
     "modifiers": ["drift_watch"],
     "doors": [
@@ -226,6 +233,7 @@
   {
     "manifestId": "DN-1701-H",
     "zone": "hub",
+    "act": "cold",
     "brief": "Parcel: 'CONTAINS A POSSIBILITY / KEEP FROZEN / KEEP OPEN-MINDED.' Hand to recipient before it becomes a subplot.",
     "modifiers": ["fragile", "drift_watch"],
     "doors": [
@@ -258,6 +266,7 @@
   {
     "manifestId": "DN-1738-C",
     "zone": "hub",
+    "act": "cold",
     "brief": "Re-route sticky: '8 out of 10 universes recommend us. The other two sued their local recipients.'",
     "modifiers": ["drift_watch"],
     "doors": [
@@ -290,6 +299,7 @@
   {
     "manifestId": "DN-1800-I",
     "zone": "hub",
+    "act": "cold",
     "brief": "Bulk multiverse transfer. C.O.D. posts on customer receipt. Processing Fee applies (we appreciate your patience across realities).",
     "modifiers": [],
     "doors": [
@@ -322,6 +332,7 @@
   {
     "manifestId": "DN-1909-J",
     "zone": "hub",
+    "act": "executive",
     "brief": "EXECUTIVE CLEARANCE. Origin redacted. Final doorway: impossible geometry. Still deliver to the named recipient.",
     "modifiers": ["executive"],
     "doors": [
@@ -355,6 +366,7 @@
   {
     "manifestId": "DN-2001-K",
     "zone": "hub",
+    "act": "executive",
     "brief": "RETURN LOOP. Identical seed → identical universe. You may have delivered here before. You will again. Fry-as-own-grandfather optional.",
     "modifiers": [],
     "doors": [

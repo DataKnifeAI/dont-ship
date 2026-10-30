@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>D.O.N.T. Ship — Definitely Not On Time</title>
   <link rel="icon" type="image/png" href="assets/brand/fen-wolf-icon-from-herographic.png" />
-  <link rel="stylesheet" href="css/style.css?v=iso-3" />
+  <link rel="stylesheet" href="css/style.css?v=iso-4" />
   <script type="importmap">
     { "imports": { "three": "./vendor/three.module.js" } }
   </script>
@@ -41,6 +41,21 @@
           <span class="label">DELIVERED</span>
           <span class="value" id="deliveries">0/5</span>
         </div>
+        <div class="audio-ctl" id="audio-ctl">
+          <button type="button" class="audio-btn" aria-label="Mute sound" aria-pressed="false" title="Sound on (M)">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path class="spk" d="M4 9h4l5-4v14l-5-4H4z" />
+              <path class="waves" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" />
+              <path class="cross" d="M16 9l6 6M22 9l-6 6" />
+            </svg>
+          </button>
+          <button type="button" class="audio-more" aria-label="Audio levels" aria-expanded="false" title="Audio levels">▾</button>
+          <div class="audio-pop" hidden>
+            <label>Music <input type="range" min="0" max="100" step="1" data-bus="music" /></label>
+            <label>SFX <input type="range" min="0" max="100" step="1" data-bus="sfx" /></label>
+            <p class="audio-hint"><kbd>M</kbd> mutes everything</p>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -73,6 +88,6 @@
     </footer>
   </div>
 
-  <script type="module" src="js/main.js?v=iso-3"></script>
+  <script type="module" src="js/main.js?v=iso-4"></script>
 </body>
 </html>

@@ -3,6 +3,10 @@ Copyright 2026 DataKnifeAI
 
 This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 
+The music and sound effects in assets/audio/ were synthesized in this
+repository by tools/music/compose.py (no samples or third-party recordings)
+and are covered by the project license.
+
 This product bundles third-party software:
 
   three.js (vendor/three.module.js, vendor/three.core.js)
