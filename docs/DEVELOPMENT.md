@@ -55,7 +55,8 @@ All music and SFX are synthesized in-repo by [`tools/music/compose.py`](../tools
 
 - **Unlock:** the `AudioContext` is created and resumed on the first user gesture (any click or key, Clock in included). Nothing is fetched or played before that. The core cues (hub bed, both jingles, both stingers) are preloaded then, and the run loops and coin motif are fetched right after.
 - **Format:** OGG when `canPlayType('audio/ogg; codecs="vorbis"')` says so, otherwise MP3 (Safari). A failed decode also falls back to MP3. MP3 loops skip leading encoder padding and are clamped to the nominal loop length, so they may not be perfectly gapless.
-- **Buses:** track → duck → music bus, stinger → SFX bus, both → master. Loops use `AudioBufferSourceNode.loop` over the full buffer. Music crossfades in 0.8 s; jingles and the coin motif start immediately while the old bed fades. Stingers duck music to 30% for their length.
+- **Buses:** track → duck → music bus, stinger → SFX bus, both → master. Loops use `AudioBufferSourceNode.loop` over the full buffer. Music crossfades in 0.8 s; jingles start immediately while the old bed fades. Stingers duck music to 30% for their length.
+- **One stinger at a time:** a sting (`sting-delivered`, `sting-forfeit`) or the coin motif is the foreground stinger. Repeating the sting that is still sounding is a no-op, and a different sting cuts it. The coin motif waits for the run bed to fade out (0.3 s) before it starts. Hub cues (jingle or hub bed) requested while a stinger sounds are queued until it ends, and only the latest one is kept. Starting a run drops the queue.
 - **Mute:** **M** or the masthead speaker button; **▾** opens music / SFX sliders. Saved in `localStorage` (`dontShip_audioMuted`, `dontShip_musicVolume`, `dontShip_sfxVolume`).
 - **Visibility:** the context suspends while the tab is hidden and resumes when it is visible again.
 
@@ -63,14 +64,14 @@ Cue map (wired in `js/main.js`):
 
 | Moment | Cue |
 |--------|-----|
-| Hub visit in a new act (first is Clock in) | Company jingle for the act (below), then `hub-ambience-loop` |
+| Hub visit in a new act (first is Clock in) | Company jingle for the act (below), then `hub-ambience-loop`. Queued behind a sounding stinger; if a run starts first, the jingle plays on the next hub visit instead |
 | Hub visit, same act | `hub-ambience-loop` (no jingle) |
 | Run in `world_space`, `world_unmapped`, `world_impossible` | `run-space-loop` |
 | Run in any other world | `run-porch-loop` (`RUN_CUE_BY_WORLD` in `js/audio.js` maps worlds to beds) |
 | Delivered card | `sting-delivered` over the returning hub bed |
 | Forfeit card | `sting-forfeit` over the returning hub bed |
-| Shift cleared | `coin-motif`, then `hub-ambience-loop` |
-| Broke (insufficient C.O.D.) | `sting-forfeit`, music fades to silence. Resetting starts a new shift, so the jingle plays again |
+| Shift cleared | `coin-motif` only (no `sting-delivered`), then `hub-ambience-loop`. Keep shipping / New shift during the motif queue the next hub cue (or new act jingle) until it ends |
+| Broke (insufficient C.O.D.) | `sting-forfeit` (continues the forfeit card's sting if it is still sounding), music fades to silence. Resetting starts a new shift, so the jingle plays again |
 
 The act comes from each manifest's `act` field in `data/manifests.json` (`dock` / `sorting` / `cold` / `executive`). The jingle detunes as the acts progress (`JINGLE_BY_ACT`):
 
@@ -81,7 +82,7 @@ The act comes from each manifest's `act` field in `data/manifests.json` (`dock` 
 | Cold Storage | `jingle-dock` slowed, −45 cents (`playbackRate` ≈ 0.974), ±10 cent wobble |
 | Executive | `jingle-executive` |
 
-Debug: `__dontShip.audio()` returns the context state, mute flag, requested and playing music cue, playback rate, last stinger, loaded cues, and recent cue events.
+Debug: `__dontShip.audio()` returns the context state, mute flag, requested, playing and queued music cue, the sounding stinger, playback rate, last sting, loaded cues, duck level, live sources (`{ cue, bus, start, gain }` against `time`), and recent cue events.
 
 Regenerate the audio with `python3 tools/music/compose.py` (or name individual cues). Requirements and per-cue notes are in [`tools/music/README.md`](../tools/music/README.md).
 

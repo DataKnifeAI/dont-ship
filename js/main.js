@@ -226,14 +226,17 @@ function actOf(manifest) {
   return manifest?.act || (manifest?.modifiers?.includes("executive") ? "executive" : "dock");
 }
 
-/** Hub bed, preceded by the company jingle whenever the act changes. */
+/**
+ * Hub bed, preceded by the company jingle whenever the act changes. Both wait
+ * behind a sounding sting or coin motif; a jingle dropped by an early door
+ * pick plays on the next hub visit.
+ */
 function cueHub(manifest) {
   const act = actOf(manifest);
   if (act !== jingleAct) {
-    jingleAct = act;
-    playJingle(act, { then: HUB_CUE });
+    playJingle(act, { then: HUB_CUE, wait: true, onstart: () => (jingleAct = act) });
   } else {
-    playMusic(HUB_CUE);
+    playMusic(HUB_CUE, { wait: true });
   }
 }
 
@@ -330,7 +333,7 @@ function finishRun(survived, cause = null) {
   setScreen("result");
 
   if (state.phase === PHASE.WIN) {
-    playMusic("coin-motif", { then: HUB_CUE });
+    playMusic("coin-motif", { hold: true, fade: 0.3, then: HUB_CUE });
     showWin(result);
     return;
   }

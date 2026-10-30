@@ -53,7 +53,9 @@ const DUCK_LEVEL = 0.3;
 const prefs = loadPrefs();
 const listeners = new Set();
 const buffers = new Map();
-const status = { music: null, playing: null, lastSting: null, events: [] };
+const status = { music: null, playing: null, queued: null, lastSting: null, events: [] };
+/** Every started buffer source until it ends (debug view in audioStatus). */
+const live = new Set();
 
 let ctx = null;
 let master = null;
@@ -63,6 +65,10 @@ let sfxBus = null;
 let current = null;
 let wantedKey = null;
 let token = 0;
+/** The stinger currently sounding (a sting, or a held motif): { cue, bus, ... }. */
+let fg = null;
+/** Music request queued behind `fg`: { name, opts }. */
+let deferred = null;
 
 /** Create/resume the AudioContext. Call from a user-gesture handler. */
 export function unlock() {
@@ -89,22 +95,49 @@ export function unlock() {
  * Crossfade the music bus to `name`. Loops repeat until replaced; one-shots
  * fall through to `then` (or silence) when they end. Re-requesting the cue
  * that is already playing is a no-op.
+ *
+ * `hold`: the one-shot is the foreground stinger (coin motif). The outgoing
+ * bed fades over `fade` and the motif starts once it is gone.
+ * `wait`: while a stinger (sting or held motif) is sounding, queue this cue
+ * until it ends instead of crossfading over it; a later request replaces the
+ * queued one and any non-waiting request drops it.
+ * `onstart`: called when the cue actually starts.
  */
-export function playMusic(name, { cents = 0, wobble = 0, then = null, fade = MUSIC_FADE } = {}) {
+export function playMusic(name, opts = {}) {
+  const { cents = 0, wobble = 0, then = null, fade = MUSIC_FADE, wait = false, hold = false, onstart = null } = opts;
+  if (!ctx) return;
   const key = `${name}|${cents}|${wobble}`;
-  if (!ctx || key === wantedKey) return;
+  if (wait && fg) {
+    deferred = key === wantedKey ? null : { name, opts: { ...opts, wait: false } };
+    status.queued = deferred && name;
+    if (deferred) logEvent("queued", name, { behind: fg.cue });
+    return;
+  }
+  deferred = null;
+  status.queued = null;
+  if (key === wantedKey) return;
+  if (fg?.bus === "music") fg = null;
   wantedKey = key;
   const my = ++token;
   status.music = name;
   logEvent("music", name, cents ? { cents, wobble } : null);
+  const stinger = hold ? { cue: name, bus: "music", track: null } : null;
+  if (stinger) {
+    cutSting();
+    fg = stinger;
+  }
   load(name).then((entry) => {
-    if (my !== token || !entry) return;
+    if (my !== token || !entry) {
+      if (stinger && fg === stinger) fg = null;
+      return;
+    }
     const loop = !!CUES[name]?.loop;
     const t = ctx.currentTime;
+    const at = stinger && current ? t + fade : t;
     fadeOutCurrent(t, fade);
     const g = ctx.createGain();
-    g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(1, t + (loop ? fade : 0.02));
+    g.gain.setValueAtTime(0, at);
+    g.gain.linearRampToValueAtTime(1, at + (loop ? fade : 0.02));
     g.connect(duckBus);
     const src = ctx.createBufferSource();
     src.buffer = entry.buffer;
@@ -119,52 +152,86 @@ export function playMusic(name, { cents = 0, wobble = 0, then = null, fade = MUS
       lfo = ctx.createOscillator();
       lfo.frequency.value = 0.45;
       lfo.connect(node(ctx.createGain(), wobble, src.detune));
-      lfo.start(t);
+      lfo.start(at);
     }
     src.connect(g);
-    src.start(t, loop ? entry.loopStart : 0);
+    src.start(at, loop ? entry.loopStart : 0);
+    trackLive(src, name, "music", g, at);
     const track = { name, src, gain: g, lfo };
+    if (stinger) stinger.track = track;
     current = track;
     status.playing = name;
+    onstart?.();
     src.onended = () => {
       lfo?.stop();
+      if (stinger && fg === stinger) fg = null;
       if (current !== track) return;
       current = null;
       status.playing = null;
       wantedKey = null;
-      if (then) playMusic(then);
+      const next = deferred || (then && { name: then, opts: {} });
+      deferred = null;
+      status.queued = null;
+      if (next) playMusic(next.name, next.opts);
       else status.music = null;
     };
   });
 }
 
-/** The act's company jingle, then `then` (normally the hub bed). */
-export function playJingle(act, { then = HUB_CUE } = {}) {
+/** The act's company jingle, then `then` (normally the hub bed). Other options pass to playMusic. */
+export function playJingle(act, { then = HUB_CUE, ...opts } = {}) {
   const j = JINGLE_BY_ACT[act] || JINGLE_BY_ACT.dock;
-  playMusic(j.cue, { cents: j.cents || 0, wobble: j.wobble || 0, then });
+  playMusic(j.cue, { ...opts, cents: j.cents || 0, wobble: j.wobble || 0, then });
 }
 
 export function stopMusic(fade = 1) {
   token += 1;
   wantedKey = null;
+  deferred = null;
+  status.queued = null;
+  if (fg?.bus === "music") fg = null;
   status.music = null;
   logEvent("music", null);
   if (ctx) fadeOutCurrent(ctx.currentTime, fade);
 }
 
-/** One-shot on the SFX bus; music ducks underneath for its length. */
+/**
+ * One-shot on the SFX bus; music ducks underneath for its length. Only one
+ * sting sounds at a time: the same sting while it is still sounding is a
+ * no-op, a different one cuts it.
+ */
 export function playSting(name, { duck = DUCK_LEVEL } = {}) {
   if (!ctx) return;
+  if (fg?.cue === name) {
+    logEvent("sting-skip", name);
+    return;
+  }
+  cutSting();
+  const rec = { cue: name, bus: "sfx", src: null, gain: null };
+  fg = rec;
   status.lastSting = name;
   logEvent("sting", name);
   load(name).then((entry) => {
-    if (!entry) return;
+    if (fg !== rec) return;
+    if (!entry) {
+      fg = null;
+      flushDeferred();
+      return;
+    }
     const t = ctx.currentTime;
     const dur = entry.buffer.duration;
     const src = ctx.createBufferSource();
     src.buffer = entry.buffer;
-    src.connect(sfxBus);
+    rec.src = src;
+    rec.gain = node(ctx.createGain(), 1, sfxBus);
+    src.connect(rec.gain);
     src.start(t);
+    trackLive(src, name, "sfx", rec.gain);
+    src.addEventListener("ended", () => {
+      if (fg !== rec) return;
+      fg = null;
+      flushDeferred();
+    });
     const p = duckBus.gain;
     p.cancelScheduledValues(t);
     p.setValueAtTime(p.value, t);
@@ -172,6 +239,26 @@ export function playSting(name, { duck = DUCK_LEVEL } = {}) {
     p.setValueAtTime(duck, t + Math.max(0.1, dur - 0.4));
     p.linearRampToValueAtTime(1, t + dur + 0.6);
   });
+}
+
+function cutSting(fade = 0.12) {
+  if (fg?.bus !== "sfx") return;
+  const { src, gain } = fg;
+  fg = null;
+  if (!src) return;
+  const t = ctx.currentTime;
+  gain.gain.cancelScheduledValues(t);
+  gain.gain.setValueAtTime(gain.gain.value, t);
+  gain.gain.linearRampToValueAtTime(0, t + fade);
+  src.stop(t + fade + 0.02);
+}
+
+function flushDeferred() {
+  if (!deferred) return;
+  const { name, opts } = deferred;
+  deferred = null;
+  status.queued = null;
+  playMusic(name, opts);
 }
 
 export function isMuted() {
@@ -244,11 +331,27 @@ export function audioStatus() {
     muted: prefs.muted,
     music: status.music,
     playing: status.playing,
+    queued: status.queued,
+    stinger: fg?.cue ?? null,
     rate: current ? current.src.playbackRate.value : null,
     lastSting: status.lastSting,
     loaded: [...buffers.keys()],
+    duck: duckBus ? +duckBus.gain.value.toFixed(3) : null,
+    sources: [...live].map(({ cue, bus, start, gain }) => ({
+      cue,
+      bus,
+      start: +start.toFixed(2),
+      gain: gain ? +gain.gain.value.toFixed(3) : 1,
+    })),
+    time: ctx ? +ctx.currentTime.toFixed(2) : null,
     events: status.events.slice(-12),
   };
+}
+
+function trackLive(src, cue, bus, gain, start = ctx.currentTime) {
+  const rec = { cue, bus, start, gain };
+  live.add(rec);
+  src.addEventListener("ended", () => live.delete(rec));
 }
 
 function load(name) {
