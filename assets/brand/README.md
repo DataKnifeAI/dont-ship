@@ -77,6 +77,7 @@ Art direction: 1958 airline poster × 1978 warehouse signage. Avoid purple-on-wh
 | `fen-wolf-logo.jpg` | **Primary** square logo mark (cute non-humanoid Fen) — README avatar, itch/Steam, favicons. |
 | `fen-wolf-icon-from-herographic.png` | Circular Fen silhouette seal cropped from `dont-ship-repo-herographic-fen.jpg` (cream disc + navy wolf profile). Reuse for footer marks. |
 | `dont-ship-repo-herographic.jpg` | **Primary** widescreen repo / social banner — **Wally** hero; singular **D.O.N.T. Ship**; bottom-left footer uses the Fen silhouette seal from the fen herographic (not the wreath/`FEN`-banner logo). No top-right Fen mark. |
+| `dataknife-mark-64.png` | DataKnifeAI mark (copied from dataknife.ai's `favicon-64.png`) for the in-game dataknife.ai link. |
 | `wally-dock-supervisor-npc.jpg` | Wally as Dock Supervisor NPC card (clipboard / manager energy). **Keep.** |
 | `wally-warehouse-stork-portrait.jpg` | Legacy stork portrait — Wally manager / dialogue portrait. |
 | `fen-wolf-portrait.jpg` | **Deprecated / alternate** — anthropomorphic Fen courier portrait. Not the logo. |

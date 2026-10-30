@@ -18,8 +18,11 @@ const SHELL = [
   "data/rooms.json",
   "assets/icons/icon-192.png",
   "assets/icons/apple-touch-icon.png",
+  "assets/icons/favicon-32.png",
+  "favicon.ico",
   "assets/brand/fen-wolf-logo.jpg",
   "assets/brand/fen-wolf-icon-from-herographic.png",
+  "assets/brand/dataknife-mark-64.png",
 ];
 
 self.addEventListener("install", (event) => {

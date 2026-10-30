@@ -88,6 +88,7 @@ async function boot() {
   bindCanvasInput(e.canvas);
   mountTouch(e.stage);
   mountAudioControls(document.getElementById("audio-ctl"));
+  mountMastLinks();
   for (const type of ["pointerdown", "keydown"]) {
     window.addEventListener(type, unlockAudio, { once: true, capture: true });
   }
@@ -167,10 +168,27 @@ function showTitle() {
       <div><dt>Best O.D.D.S.</dt><dd>${bestOdds}</dd></div>
       <div><dt>Shift goal</dt><dd>${shiftTarget(state)} C.O.D. or ${GOALS.deliveriesTarget} deliveries</dd></div>
     </dl>
+    <nav class="project-links title-links" aria-label="Project links">${projectLinksHtml()}</nav>
   `,
     "title"
   );
   document.getElementById("start-btn").addEventListener("click", clockIn);
+}
+
+/** Source / dataknife.ai links, written once in the ticker (`#project-links`) in index.html. */
+function projectLinksHtml() {
+  return document.getElementById("project-links")?.innerHTML ?? "";
+}
+
+/** Icon-only copy in the masthead for short screens, where the ticker is hidden and the title card is full. */
+function mountMastLinks() {
+  const html = projectLinksHtml();
+  if (!html) return;
+  const nav = document.createElement("nav");
+  nav.className = "project-links mast-links";
+  nav.setAttribute("aria-label", "Project links");
+  nav.innerHTML = html;
+  document.querySelector(".masthead .brand")?.append(nav);
 }
 
 function clockIn() {
@@ -466,7 +484,7 @@ function onGlobalKey(e) {
     toggleMute();
     return;
   }
-  if (state.phase === PHASE.BOOT && e.code === "Enter" && document.getElementById("start-btn")) {
+  if (state.phase === PHASE.BOOT && e.code === "Enter" && document.getElementById("start-btn") && !e.target.closest?.("a")) {
     e.preventDefault();
     clockIn();
     return;

@@ -64,6 +64,7 @@ Test on a phone over the LAN with `python -m http.server 8080 --bind 0.0.0.0`. T
 ## Installable app (PWA) and offline
 
 - `manifest.webmanifest`: name, `display: fullscreen` (falls back to standalone), `orientation: landscape`, theme `#1f4e79`, and Fen logo icons in `assets/icons/` (192 / 512, plus maskable versions with a safe-zone margin). iOS uses the `apple-mobile-web-app-*` meta tags and `assets/icons/apple-touch-icon.png` (180 px). Install with Share → Add to Home Screen.
+- Favicons: `favicon.ico` at the repo root (16 / 32 / 48, for browsers that request `/favicon.ico` directly) and `assets/icons/favicon-16.png` / `favicon-32.png`, a tighter crop of Fen's head so it reads at tab size. The mock pages in `mocks/` link the same files.
 - `js/pwa.js` registers `sw.js?v=<version>` using its own `?v=` suffix from `index.html`, and shows an **Install** button in the masthead when the browser fires `beforeinstallprompt`. After the worker is ready, it posts every same-origin URL the page has loaded, so a first visit ends up fully cached (audio fetched later is cached as it goes through the worker).
 - `sw.js` is **network first**: online players always get the deployed files, and the cache is only the fallback when the network fails, or when a page load stalls for 4 s and a cached copy exists. All navigations to the game page share one cached shell, whatever the query string. The cache is named `dont-ship-<version>`. A new version installs a new worker that precaches the shell, and older `dont-ship-*` caches are deleted on activate.
 - `?sw=0` unregisters the worker and clears its caches (useful if a stale copy ever gets in the way during development). DevTools → Application → Service workers / Cache storage shows what is installed.
@@ -119,7 +120,7 @@ Three.js r186 is vendored in `vendor/` and resolved through the import map in `i
 
 | Path | Role |
 |------|------|
-| `index.html` | Shell UI: masthead + ledger, stage (dispatch bar, overlays), J.E.V. wire ticker |
+| `index.html` | Shell UI: masthead + ledger, stage (dispatch bar, overlays), J.E.V. wire ticker. The ticker holds the Source / dataknife.ai links, which `main.js` copies onto the title card and (icon-only, short screens) the masthead; they are hidden during runs |
 | `css/style.css` | One card/stamp system for chrome, hub tickets, run HUD and overlays |
 | `js/main.js` | Title / intake / bet / result flow, wires the 3D hub |
 | `js/touch.js` | Touch mode, virtual joystick + jump, rotate prompt, fullscreen ([Mobile](#mobile-and-touch)) |
@@ -164,7 +165,7 @@ Three.js r186 is vendored in `vendor/` and resolved through the import map in `i
 
 ## Cache busting
 
-`index.html` loads `css/style.css?v=iso-7`, `js/pwa.js?v=iso-7` and `js/main.js?v=iso-7`. Bump that suffix in all three places when shipping CSS or JS changes so browsers and the Pages CDN fetch fresh copies. The `js/pwa.js` suffix also names the service worker and its offline cache (`sw.js?v=iso-7` → `dont-ship-iso-7`), so a bump replaces the installed worker and drops the old cache. Modules imported by `main.js` have no suffix of their own; the network-first worker still serves them fresh whenever the network is up.
+`index.html` loads `css/style.css?v=iso-8`, `js/pwa.js?v=iso-8` and `js/main.js?v=iso-8`. Bump that suffix in all three places when shipping CSS or JS changes so browsers and the Pages CDN fetch fresh copies. The `js/pwa.js` suffix also names the service worker and its offline cache (`sw.js?v=iso-8` → `dont-ship-iso-8`), so a bump replaces the installed worker and drops the old cache. Modules imported by `main.js` have no suffix of their own; the network-first worker still serves them fresh whenever the network is up.
 
 ## Deploy (GitHub Pages)
 
