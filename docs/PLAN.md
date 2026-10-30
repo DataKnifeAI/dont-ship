@@ -2,6 +2,7 @@
 
 _Updated 2026-10-29. Supersedes the 2.5D side-scroller / painted-plate direction._
 _Progression, quotas, and why players keep opening doors: [`docs/PROGRESSION.md`](PROGRESSION.md). Story and theme: [`docs/NARRATIVE.md`](NARRATIVE.md). Current gameplay: [`docs/GAMEPLAY.md`](GAMEPLAY.md)._
+_How the project got here, and why the 2.5D direction was dropped: [`docs/HISTORY.md`](HISTORY.md)._
 
 ## Locked decisions
 

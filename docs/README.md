@@ -8,5 +8,6 @@
 | [PLAN.md](PLAN.md) | Iso direction: locked decisions, art pipeline, roadmap, hazard tag table and tier scaling |
 | [PROGRESSION.md](PROGRESSION.md) | Careers, shifts, quotas, tools, perks, calibration trust, meta progression |
 | [NARRATIVE.md](NARRATIVE.md) | Story and theme: acts as AI eras, mirror universes, factions, endings, lore lines |
+| [HISTORY.md](HISTORY.md) | Design history and decision log: original brief, pivots (2D → 2.5D → iso), what was superseded, lessons learned |
 | [Brand assets](../assets/brand/README.md) | Fen and Wally art rules, palette, asset files, alt text |
 | [2.5D mocks](../assets/mocks/25d/README.md) | Superseded painted direction stills (mood reference only) |
