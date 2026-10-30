@@ -11,6 +11,8 @@ import { buildTiles, SPEED, STEP, tileTop, walkable } from "./map.js";
 import { buildCourier, buildGoal, buildHeldParcel } from "./props.js";
 import { ISO_WORLDS, buildProp } from "./worlds.js";
 import { ensureShared, isoAvailable } from "./shared.js";
+import { QUALITY } from "../quality.js";
+import { touchStick } from "../touch.js";
 
 const RADIUS = 0.24;
 const CAM_OFFSET = new THREE.Vector3(40, 40, 40);
@@ -72,7 +74,7 @@ function createIsoRun(sh, def, template, seed, mods, resolve) {
   const hemi = new THREE.HemisphereLight(def.lights.sky, def.lights.ground, def.lights.hemi);
   const sun = new THREE.DirectionalLight(def.lights.sun, def.lights.sunI);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.mapSize.setScalar(QUALITY.shadowMap);
   sun.shadow.radius = 3;
   sun.shadow.bias = -0.0006;
   sun.shadow.normalBias = 0.02;
@@ -275,6 +277,8 @@ function createIsoRun(sh, def, template, seed, mods, resolve) {
 
   function inputDir() {
     if (pilot.on) return pilotDir(player.pos);
+    const stick = touchStick();
+    if (stick) return new THREE.Vector2(stick.x - stick.y, -stick.x - stick.y).multiplyScalar(Math.SQRT1_2);
     const ix = (keys.has("d") || keys.has("arrowright") ? 1 : 0) - (keys.has("a") || keys.has("arrowleft") ? 1 : 0);
     const iy = (keys.has("w") || keys.has("arrowup") ? 1 : 0) - (keys.has("s") || keys.has("arrowdown") ? 1 : 0);
     // Screen right = world (1,0,-1); screen up = world (-1,0,-1).

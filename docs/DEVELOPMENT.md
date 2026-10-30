@@ -47,6 +47,27 @@ node tools/iso-check.mjs world_jungle # one or more worlds
 
 Validates maps without a browser or WebGL: start → goal routes, every tag × tier hazard plan, seed determinism, and a full scene build ticked for a few seconds.
 
+## Mobile and touch
+
+Landscape first. `js/touch.js` handles touch; it is mounted from `boot()` in `js/main.js`.
+
+- **Touch mode:** `body.touch` starts on for coarse-pointer devices, turns on at the first touch and off at the first real WASD / arrow / Space key or mouse press, so touch laptops follow whatever was used last. It swaps the keyboard hints (`.key-hint`) for touch hints (`.touch-hint`) on the title card, the hub help line and the run HUD, and hides `<kbd>` chips on buttons and tickets.
+- **Hub:** tap a door in the hall or its ticket (both were already click targets).
+- **Run:** a floating virtual joystick on the left half of the stage (the base jumps to where the thumb lands) and a jump zone on the right half (the **JUMP** button is just the visual). The iso run reads the analog stick through `touchStick()` in `inputDir()`, so partial deflection walks slower. The stick and jump also press WASD / Space as synthetic `KeyboardEvent`s, which is how the legacy 2D run gets touch for free. Everything is released when the screen leaves `run`, on blur and when the tab is hidden.
+- **Portrait phones** (portrait, coarse pointer, ≤ 600 px wide) get a "Rotate your phone" screen. **Play in portrait anyway** dismisses it for the session (`sessionStorage.dontShip_portraitOk`).
+- **Fullscreen:** a masthead button (touch mode only, where the Fullscreen API exists) goes fullscreen and tries `screen.orientation.lock("landscape")`. iPhone Safari has no element fullscreen; installing to the home screen is the way there.
+- **Layout:** at `max-height: 560px` or `max-width: 720px` the chrome compacts (smaller masthead and ledger, no ticker on short screens), the iso stage fills the screen instead of letterboxing to 16:9 (the 2D fallback keeps 16:9), and the hub hall ends above the routing memo (`--memo-h`, measured by `touch.js`) so tickets stay tappable. Tickets drop the tier, payout and flavor text there (the door signs show them). `viewport-fit=cover` plus `env(safe-area-inset-*)` padding keeps notches clear. The stage has `touch-action: none` (no scroll / zoom / long-press callout); overlay cards keep `pan-y` so long results still scroll.
+- **Render quality** (`js/quality.js`, picked once at load): **high** on desktop (DPR ≤ 2, 2048 soft shadows, ink outlines), **medium** on touch devices (DPR ≤ 1.5, 1024 soft shadows), **low** on weak devices (≤ 2 cores, ≤ 2 GB, or Save-Data: DPR 1, 1024 hard shadows, no outline hulls). Most of the savings are fill rate: DPR 1.5 on a phone draws about a quarter of the pixels of DPR 3, and DPR 1 under half of 1.5. Dropping outlines saves about 20% of the hub's draw calls; runs barely change, because tiles are instanced. Force one with `?quality=low|medium|high`; `__isoQuality()` reports the tier, pixel ratio and last frame's draw calls.
+
+Test on a phone over the LAN with `python -m http.server 8080 --bind 0.0.0.0`. The service worker only registers on `https://` or `localhost`, so a LAN IP gets touch but not offline mode. In Chromium DevTools, device emulation with touch covers most of it.
+
+## Installable app (PWA) and offline
+
+- `manifest.webmanifest`: name, `display: fullscreen` (falls back to standalone), `orientation: landscape`, theme `#1f4e79`, and Fen logo icons in `assets/icons/` (192 / 512, plus maskable versions with a safe-zone margin). iOS uses the `apple-mobile-web-app-*` meta tags and `assets/icons/apple-touch-icon.png` (180 px). Install with Share → Add to Home Screen.
+- `js/pwa.js` registers `sw.js?v=<version>` using its own `?v=` suffix from `index.html`, and shows an **Install** button in the masthead when the browser fires `beforeinstallprompt`. After the worker is ready, it posts every same-origin URL the page has loaded, so a first visit ends up fully cached (audio fetched later is cached as it goes through the worker).
+- `sw.js` is **network first**: online players always get the deployed files, and the cache is only the fallback when the network fails, or when a page load stalls for 4 s and a cached copy exists. All navigations to the game page share one cached shell, whatever the query string. The cache is named `dont-ship-<version>`. A new version installs a new worker that precaches the shell, and older `dont-ship-*` caches are deleted on activate.
+- `?sw=0` unregisters the worker and clears its caches (useful if a stale copy ever gets in the way during development). DevTools → Application → Service workers / Cache storage shows what is installed.
+
 ## Audio
 
 All music and SFX are synthesized in-repo by [`tools/music/compose.py`](../tools/music/README.md) into `assets/audio/` (`.ogg` Vorbis masters with sample-exact loops, plus `.mp3` fallbacks). Listen to every cue at [http://127.0.0.1:8080/mocks/music-preview.html](http://127.0.0.1:8080/mocks/music-preview.html).
@@ -101,6 +122,11 @@ Three.js r186 is vendored in `vendor/` and resolved through the import map in `i
 | `index.html` | Shell UI: masthead + ledger, stage (dispatch bar, overlays), J.E.V. wire ticker |
 | `css/style.css` | One card/stamp system for chrome, hub tickets, run HUD and overlays |
 | `js/main.js` | Title / intake / bet / result flow, wires the 3D hub |
+| `js/touch.js` | Touch mode, virtual joystick + jump, rotate prompt, fullscreen ([Mobile](#mobile-and-touch)) |
+| `js/quality.js` | Render quality tier: DPR cap, shadow map, outlines |
+| `js/pwa.js` | Service worker registration + Install button |
+| `sw.js` | Network-first offline cache, one per cache-bust version ([PWA](#installable-app-pwa-and-offline)) |
+| `manifest.webmanifest` | Web app manifest; icons in `assets/icons/` |
 | `js/iso/` | Three.js iso renderer (modules below) |
 | `js/iso/worlds/` | One file per world: grid + legend, native hazards / anchors, world props, decoration |
 | `tools/iso-check.mjs` | Headless map / hazard-plan / scene validator |
@@ -138,7 +164,7 @@ Three.js r186 is vendored in `vendor/` and resolved through the import map in `i
 
 ## Cache busting
 
-`index.html` loads `css/style.css?v=iso-4` and `js/main.js?v=iso-4`. Bump that suffix (both places) when shipping CSS or JS changes so browsers and the Pages CDN fetch fresh copies.
+`index.html` loads `css/style.css?v=iso-7`, `js/pwa.js?v=iso-7` and `js/main.js?v=iso-7`. Bump that suffix in all three places when shipping CSS or JS changes so browsers and the Pages CDN fetch fresh copies. The `js/pwa.js` suffix also names the service worker and its offline cache (`sw.js?v=iso-7` → `dont-ship-iso-7`), so a bump replaces the installed worker and drops the old cache. Modules imported by `main.js` have no suffix of their own; the network-first worker still serves them fresh whenever the network is up.
 
 ## Deploy (GitHub Pages)
 

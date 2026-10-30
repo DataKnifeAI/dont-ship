@@ -53,6 +53,7 @@ import {
   unlock as unlockAudio,
 } from "./audio.js";
 import { createHub, hasIsoWorld, isoAvailable, startRun as startIsoRun } from "./iso/index.js";
+import { mountTouch } from "./touch.js";
 
 const params = new URLSearchParams(location.search);
 /** `?renderer=2d` forces the legacy side-scroller (and the 2D door hall) everywhere. */
@@ -85,6 +86,7 @@ async function boot() {
 
   bindControls();
   bindCanvasInput(e.canvas);
+  mountTouch(e.stage);
   mountAudioControls(document.getElementById("audio-ctl"));
   for (const type of ["pointerdown", "keydown"]) {
     window.addEventListener(type, unlockAudio, { once: true, capture: true });
@@ -156,8 +158,9 @@ function showTitle() {
     </p>
     <button type="button" class="btn btn-primary" id="start-btn">Clock in <kbd>Enter</kbd></button>
     <ul class="title-controls">
-      <li><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> or click: pick a door</li>
-      <li><kbd>WASD</kbd> move · <kbd>Space</kbd> jump · wheel zoom</li>
+      <li class="key-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> or click: pick a door</li>
+      <li class="key-hint"><kbd>WASD</kbd> move · <kbd>Space</kbd> jump · wheel zoom</li>
+      <li class="touch-hint">Tap a door · left thumb moves · right thumb jumps</li>
     </ul>
     <dl class="title-bests">
       <div><dt>Best bankroll</dt><dd>${Number(state.sessionBestBankroll).toFixed(0)} C.O.D.</dd></div>

@@ -24,6 +24,8 @@ Then open [http://localhost:8080](http://localhost:8080).
 
 - **Door hall:** click a door, or press **1 / 2 / 3**.
 - **Run:** **WASD / arrows** to move, **Space** to jump, mouse wheel to zoom.
+- **Touch (phones / tablets, landscape):** tap a door; in a run, drag anywhere on the left half for the joystick and tap the right half to jump. The masthead has a fullscreen button.
+- **Install:** use the browser's Install button (Android / desktop Chrome) or Share → Add to Home Screen (iOS). It plays offline after the first visit.
 - **Sound:** **M** mutes (or use the speaker button in the masthead).
 - No WebGL? Add `?renderer=2d` for the legacy 2D version.
 

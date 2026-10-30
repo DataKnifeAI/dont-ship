@@ -58,7 +58,7 @@ export function renderGoalLine(state) {
   const g = goalProgress(state);
   e.houseCopy.textContent = `Shift ${g.shift} goal: ${g.bankrollTarget} C.O.D. · ${g.deliveriesTarget} deliveries · or survive ${g.executiveId}`;
   document.getElementById("memo-help").innerHTML =
-    `<b>Low %</b> = harder universe · deliver more often than J.E.V. predicts → <b>+EV</b> · stake <b>${state.stake} C.O.D.</b> · click a door or <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd>`;
+    `<b>Low %</b> = harder universe · deliver more often than J.E.V. predicts → <b>+EV</b> · stake <b>${state.stake} C.O.D.</b> · <span class="key-hint">click a door or <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span><span class="touch-hint">tap a door</span>`;
 }
 
 /** Parcel stamps from manifest modifiers (e.g. FRAGILE). */

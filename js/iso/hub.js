@@ -9,6 +9,7 @@ import * as THREE from "three";
 import { createKit, disposeTree, hex, PAL } from "./kit.js";
 import { buildCourier } from "./props.js";
 import { ensureShared } from "./shared.js";
+import { QUALITY } from "../quality.js";
 
 const W = 12; // back wall length (x)
 const D = 6.4; // floor depth (z)
@@ -50,7 +51,7 @@ export function createHub({ stage, onPick, onHover, images = {} } = {}) {
   const hemi = new THREE.HemisphereLight(0xfff4dc, 0x8a6a3a, 1.35);
   const sun = new THREE.DirectionalLight(0xffe6bf, 2.3);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.mapSize.setScalar(QUALITY.shadowMap);
   sun.shadow.radius = 3;
   sun.shadow.bias = -0.0006;
   sun.shadow.normalBias = 0.02;
@@ -128,7 +129,7 @@ export function createHub({ stage, onPick, onHover, images = {} } = {}) {
       el.type = "button";
       el.className = `ticket tier-${c.tier}`;
       el.innerHTML = `
-        <span class="ticket-head"><kbd>${i + 1}</kbd><span class="ticket-door">${esc(c.id)} · <b>${esc(c.prob)}</b> · ${esc(c.payout)}</span><span class="ticket-tier">${esc(c.tier.toUpperCase())}</span></span>
+        <span class="ticket-head"><kbd>${i + 1}</kbd><span class="ticket-door">${esc(c.id)} · <b>${esc(c.prob)}</b><span class="ticket-pay"> · ${esc(c.payout)}</span></span><span class="ticket-tier">${esc(c.tier.toUpperCase())}</span></span>
         <span class="ticket-tags">${c.tags.map((t) => `<i>${esc(t)}</i>`).join("")}</span>
         <span class="ticket-text">${esc(c.text)}</span>`;
       el.addEventListener("mouseenter", () => setHover(i));

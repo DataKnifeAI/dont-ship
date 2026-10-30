@@ -1,6 +1,7 @@
 // Low-poly toon kit: materials, mesh helpers, CanvasTexture signage.
 // One kit per run so everything it allocates can be disposed with the run.
 import * as THREE from "three";
+import { QUALITY } from "../quality.js";
 
 export const PAL = {
   avocado: 0x568203,
@@ -37,6 +38,7 @@ export function createKit() {
   }
 
   function outline(mesh, t = 0.022) {
+    if (!QUALITY.outlines) return mesh;
     const geo = mesh.geometry;
     geo.computeBoundingBox();
     const s = new THREE.Vector3();

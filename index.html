@@ -2,10 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>D.O.N.T. Ship — Definitely Not On Time</title>
+  <meta name="description" content="Multiverse parcel courier: pick a door at Box 407-B, run its pocket universe, deliver at J.E.V.'s posted odds." />
+  <meta name="theme-color" content="#1f4e79" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="D.O.N.T. Ship" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/png" href="assets/brand/fen-wolf-icon-from-herographic.png" />
-  <link rel="stylesheet" href="css/style.css?v=iso-6" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="css/style.css?v=iso-7" />
   <script type="importmap">
     { "imports": { "three": "./vendor/three.module.js" } }
   </script>
@@ -88,6 +97,15 @@
     </footer>
   </div>
 
-  <script type="module" src="js/main.js?v=iso-6"></script>
+  <div class="rotate-prompt" role="dialog" aria-labelledby="rotate-title">
+    <img src="assets/icons/icon-192.png" width="96" height="96" alt="" />
+    <div class="rotate-phone" aria-hidden="true"></div>
+    <h2 id="rotate-title">Rotate your phone</h2>
+    <p>Box 407-B is a landscape operation. Turn sideways to clock in.</p>
+    <button type="button" class="btn" id="rotate-ok">Play in portrait anyway</button>
+  </div>
+
+  <script type="module" src="js/pwa.js?v=iso-7"></script>
+  <script type="module" src="js/main.js?v=iso-7"></script>
 </body>
 </html>
