@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>D.O.N.T. Ship — Definitely Not On Time</title>
+  <link rel="icon" type="image/png" href="assets/brand/fen-wolf-icon-from-herographic.png" />
+  <link rel="stylesheet" href="css/style.css?v=iso-3" />
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" data-screen="title">
+    <header class="masthead">
+      <div class="brand">
+        <img
+          class="logo-img"
+          src="assets/brand/fen-wolf-icon-from-herographic.png"
+          width="40"
+          height="40"
+          alt="Fen — D.O.N.T. Ship logo"
+        />
+        <h1 class="wordmark"><span class="dont">D.O.N.T.</span> <span class="ship">Ship</span></h1>
+        <p class="tagline">Delivering Outcomes, Not Timelines.</p>
+      </div>
+      <div class="ledger" id="ledger">
+        <div class="stat stat-cod" title="Cash on delivery: your bankroll. Stake 10 per door.">
+          <span class="label">C.O.D.</span>
+          <span class="value" id="bankroll">100</span>
+        </div>
+        <div class="stat" title="O.D.D.S.: calibration of displayed odds vs. your outcomes (higher is better).">
+          <span class="label">O.D.D.S.</span>
+          <span class="value" id="calibration">—</span>
+        </div>
+        <div class="stat" title="Runs this shift">
+          <span class="label">RUNS</span>
+          <span class="value" id="runs">0</span>
+        </div>
+        <div class="stat" title="Shift goal: 200 C.O.D., 5 deliveries, or survive the Executive manifest.">
+          <span class="label">DELIVERED</span>
+          <span class="value" id="deliveries">0/5</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="stage" id="stage">
+        <canvas id="game" width="960" height="540" tabindex="0"></canvas>
+        <aside class="memo-card" id="brief-panel">
+          <div class="memo-head"><span>ROUTING MEMO</span><span id="memo-id">—</span></div>
+          <p class="memo" id="brief">Awaiting terminal dispense…</p>
+          <p class="modifiers" id="modifiers"></p>
+          <div class="memo-foot">
+            <span class="memo-help" id="memo-help"></span>
+            <span class="house-copy" id="house-copy">Delivery is guaranteed. Timing is a distribution.</span>
+          </div>
+        </aside>
+        <div class="overlay" id="overlay"></div>
+      </section>
+
+      <!-- Legacy side door list stub kept for els().doors. -->
+      <aside class="panel doors" id="doors-panel" hidden aria-hidden="true">
+        <div id="doors" class="door-list"></div>
+      </aside>
+    </main>
+
+    <footer class="ticker">
+      <span class="ticker-tag">J.E.V. WIRE</span>
+      <div class="ticker-track">
+        <span id="ticker">Processing Fee: 5% (we appreciate your patience) · 8 out of 10 universes recommend us · Box 407-B reminds couriers that doors are load-bearing · Timing is a distribution · Today's forecast: probable</span>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="js/main.js?v=iso-3"></script>
+</body>
+</html>

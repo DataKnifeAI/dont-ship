@@ -1,0 +1,387 @@
+[
+  {
+    "manifestId": "DN-1001-A",
+    "zone": "hub",
+    "brief": "ROUTING MEMO: Training parcel. Box 407-B doorways dump you into pocket universes. Deliver to the named recipient on the far side. Timing remains a distribution.",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Suburban porch. Mailbox already knows your name. Mild existential humidity.",
+        "displayedProb": 0.78,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_porch",
+        "hazardTags": ["none"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Storm rooftops. Acid rain on a schedule nobody follows. Deliver anyway.",
+        "displayedProb": 0.18,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_rooftops",
+        "hazardTags": ["acid_rain"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Unmapped void. Black-hole mail slot where the customer should be.",
+        "displayedProb": 0.04,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_unmapped",
+        "hazardTags": ["black_hole_slot", "meta"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1120-B",
+    "zone": "hub",
+    "brief": "PRIORITY: Recipient listed as 'definitely a person.' Universe may disagree. Hand off the parcel; argue later.",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Quiet block Ω. Sentient traffic waves politely. Do not wave back.",
+        "displayedProb": 0.72,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_neighborhood",
+        "hazardTags": ["sentient_traffic"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Crystal ruin canopy. Fauna bite schedules. Fragile stamp applies mid-air.",
+        "displayedProb": 0.21,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_jungle",
+        "hazardTags": ["crystal_fauna", "fragile_parcel_required"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Deep space docklet. Low gravity. Parcel floats; dignity does not.",
+        "displayedProb": 0.07,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_space",
+        "hazardTags": ["low_gravity", "meta"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1204-C",
+    "zone": "hub",
+    "brief": "FRAGILE: CONTAINS A POSSIBILITY. Do not drop, shake, or explain to a Meeseeks. Deliver intact.",
+    "modifiers": ["fragile"],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Neon alley X-12. Moving walkways with opinions. Customer desk at end.",
+        "displayedProb": 0.65,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_neon",
+        "hazardTags": ["portal_wind", "fragile_parcel_required"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Sunken post route. Bubbles judge your form. Keep the possibility dry-ish.",
+        "displayedProb": 0.25,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_underwater",
+        "hazardTags": ["pressure", "fragile_parcel_required"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Impossible geometry. Meeseeks impatience rated 'helpfully lethal.'",
+        "displayedProb": 0.1,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_impossible",
+        "hazardTags": ["meeseeks", "fragile_parcel_required"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1337-D",
+    "zone": "hub",
+    "brief": "Memo scrap: 'When you do things right, couriers won't be sure which universe did anything at all.' Still get a signature.",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Porch-3. Hedge platforms. Cheerful dread. Standard sunny nonsense.",
+        "displayedProb": 0.7,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_porch",
+        "hazardTags": ["none"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "A shipping-floor universe — same belts, wrong sky. Planet Express energy.",
+        "displayedProb": 0.22,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_shipping",
+        "hazardTags": ["belts", "portal_wind"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Void pocket. Stamp: CALIBRATION GUARANTEED (laugh track optional).",
+        "displayedProb": 0.08,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_unmapped",
+        "hazardTags": ["meta", "black_hole_slot"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1402-E",
+    "zone": "hub",
+    "brief": "Inter-universe transfer. Signature line: 'N/A (probabilistic).' Customer still expects the box.",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Desert highway ∞. Hot wind, hotter deadlines. Hitchhikers are not recipients.",
+        "displayedProb": 0.68,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_desert",
+        "hazardTags": ["heat_shimmer"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Storm rooftops-9. Portal wind between ledges. Lightning keeps score.",
+        "displayedProb": 0.24,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_rooftops",
+        "hazardTags": ["acid_rain", "portal_wind"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Crystal ruins. Fauna rewrite floor plans hourly. Deliver or be compost.",
+        "displayedProb": 0.08,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_jungle",
+        "hazardTags": ["crystal_fauna"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1515-F",
+    "zone": "hub",
+    "brief": "STATISTICALLY URGENT. Find the customer before this distribution collapses into a sitcom.",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Neighborhood Ω. Sentient crosswalks. They mostly point somewhere.",
+        "displayedProb": 0.6,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_neighborhood",
+        "hazardTags": ["sentient_traffic"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Frozen Outpost-7. Ice is a lifestyle. Friction is a rumor.",
+        "displayedProb": 0.28,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_frozen",
+        "hazardTags": ["ice", "drift_watch"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Deep space. Low-g platforms. Black-hole slot marked 'OUT / RCPT.'",
+        "displayedProb": 0.12,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_space",
+        "hazardTags": ["low_gravity", "black_hole_slot"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1608-G",
+    "zone": "hub",
+    "brief": "Cold-route pull across universes you have not visited. J.E.V. insists déjà vu is a supported feature.",
+    "modifiers": ["drift_watch"],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Frozen causeway. Odds look honest. That is suspicious.",
+        "displayedProb": 0.55,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_frozen",
+        "hazardTags": ["ice"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Underwater post. Pressure spikes. Fish file complaints in triplicate.",
+        "displayedProb": 0.3,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_underwater",
+        "hazardTags": ["pressure", "ice"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Unmapped void. A gap that opens onto a delivery you will make later.",
+        "displayedProb": 0.15,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_unmapped",
+        "hazardTags": ["meta", "meeseeks"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1701-H",
+    "zone": "hub",
+    "brief": "Parcel: 'CONTAINS A POSSIBILITY / KEEP FROZEN / KEEP OPEN-MINDED.' Hand to recipient before it becomes a subplot.",
+    "modifiers": ["fragile", "drift_watch"],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Desert overnight. Heat shimmer bends platforms. Possibility hates sand.",
+        "displayedProb": 0.58,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_desert",
+        "hazardTags": ["heat_shimmer", "fragile_parcel_required"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Neon X-12 with portal wind. Meeseeks courier already tried; failed cheerfully.",
+        "displayedProb": 0.27,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_neon",
+        "hazardTags": ["portal_wind", "meeseeks", "ice"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Impossible geometry. Probability fog + Meeseeks countdown.",
+        "displayedProb": 0.15,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_impossible",
+        "hazardTags": ["meta", "meeseeks", "ice"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1738-C",
+    "zone": "hub",
+    "brief": "Re-route sticky: '8 out of 10 universes recommend us. The other two sued their local recipients.'",
+    "modifiers": ["drift_watch"],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Porch again? No — porch adjacent. Dogs bark in stereo across timelines.",
+        "displayedProb": 0.62,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_porch",
+        "hazardTags": ["none"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Shipping-floor pocket. Belts reverse for 'calibration.' Customer still waiting.",
+        "displayedProb": 0.26,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_shipping",
+        "hazardTags": ["belts", "portal_wind"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Mispriced void door. Hunt +EV. Trust nothing wearing a smile.",
+        "displayedProb": 0.12,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_unmapped",
+        "hazardTags": ["meta", "black_hole_slot"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1800-I",
+    "zone": "hub",
+    "brief": "Bulk multiverse transfer. C.O.D. posts on customer receipt. Processing Fee applies (we appreciate your patience across realities).",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Neighborhood stroll. Ideal for couriers who dislike cosmic nonsense.",
+        "displayedProb": 0.74,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_neighborhood",
+        "hazardTags": ["none"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Sunken ruins post. Pressure + crystal fauna. Some vines are older than HR.",
+        "displayedProb": 0.19,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_underwater",
+        "hazardTags": ["pressure", "crystal_fauna"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Desert gauntlet. HR calls heat shimmer a 'growth opportunity.'",
+        "displayedProb": 0.07,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_desert",
+        "hazardTags": ["heat_shimmer"]
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-1909-J",
+    "zone": "hub",
+    "brief": "EXECUTIVE CLEARANCE. Origin redacted. Final doorway: impossible geometry. Still deliver to the named recipient.",
+    "modifiers": ["executive"],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Impossible hall. Portraits smile without eyes. Customer desk at the vanishing point.",
+        "displayedProb": 0.5,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_impossible",
+        "hazardTags": ["none"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Deep space spine. Low gravity. Smells of toner and destiny.",
+        "displayedProb": 0.35,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_space",
+        "hazardTags": ["low_gravity", "portal_wind"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Labeled 99%. Resolves otherwise. Stamp: TRUST THE MACHINE.",
+        "displayedProb": 0.99,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_unmapped",
+        "hazardTags": ["meta", "miscalibrated", "meeseeks"],
+        "trueProbOverride": 0.12
+      }
+    ]
+  },
+  {
+    "manifestId": "DN-2001-K",
+    "zone": "hub",
+    "brief": "RETURN LOOP. Identical seed → identical universe. You may have delivered here before. You will again. Fry-as-own-grandfather optional.",
+    "modifiers": [],
+    "doors": [
+      {
+        "id": "A",
+        "outcomeText": "Familiar porch. Déjà vu is a supported feature.",
+        "displayedProb": 0.66,
+        "difficultyTier": "easy",
+        "roomTemplate": "world_porch",
+        "hazardTags": ["none"]
+      },
+      {
+        "id": "B",
+        "outcomeText": "Neon alley you swear you already ran. Portal wind agrees.",
+        "displayedProb": 0.24,
+        "difficultyTier": "hard",
+        "roomTemplate": "world_neon",
+        "hazardTags": ["portal_wind"]
+      },
+      {
+        "id": "C",
+        "outcomeText": "Void again. Do not ask the recipient about their grandfather.",
+        "displayedProb": 0.1,
+        "difficultyTier": "brutal",
+        "roomTemplate": "world_unmapped",
+        "hazardTags": ["meta", "black_hole_slot"]
+      }
+    ]
+  }
+]
