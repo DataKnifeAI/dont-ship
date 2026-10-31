@@ -6,6 +6,12 @@
  */
 
 const BASE = "assets/audio/";
+/** Cache-bust suffix of `js/main.js` in index.html; audio URLs carry it so a bump refetches past HTTP / CDN caches. */
+const VERSION = (() => {
+  const src = document.querySelector('script[src*="js/main.js"]')?.src;
+  return src ? new URL(src).searchParams.get("v") : null;
+})();
+const QUERY = VERSION ? `?v=${encodeURIComponent(VERSION)}` : "";
 const LS_MUTED = "dontShip_audioMuted";
 const LS_MUSIC = "dontShip_musicVolume";
 const LS_SFX = "dontShip_sfxVolume";
@@ -371,7 +377,7 @@ async function fetchDecode(name) {
   let lastErr = null;
   for (const ext of formats()) {
     try {
-      const res = await fetch(`${BASE}${name}.${ext}`);
+      const res = await fetch(`${BASE}${name}.${ext}${QUERY}`);
       if (!res.ok) throw new Error(`${name}.${ext} HTTP ${res.status}`);
       const buffer = await decode(await res.arrayBuffer());
       return { buffer, ext, ...loopPoints(buffer, ext, CUES[name]?.loop) };

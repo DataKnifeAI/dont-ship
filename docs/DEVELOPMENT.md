@@ -92,7 +92,7 @@ Cue map (wired in `js/main.js`):
 | Run in any other world | `run-porch-loop` (`RUN_CUE_BY_WORLD` in `js/audio.js` maps worlds to beds) |
 | Delivered card | `sting-delivered` over the returning hub bed |
 | Forfeit card | `sting-forfeit` over the returning hub bed |
-| Shift cleared | `coin-motif` only (no `sting-delivered`), then `hub-ambience-loop`. Keep shipping / New shift during the motif queue the next hub cue (or new act jingle) until it ends |
+| Shift cleared | `coin-motif` only (no `sting-delivered`; ~9.3 s: brass phrase, coin flip, landing ting), then `hub-ambience-loop`. Keep shipping / New shift during the motif queue the next hub cue (or new act jingle) until it ends |
 | Broke (insufficient C.O.D.) | `sting-forfeit` (continues the forfeit card's sting if it is still sounding), music fades to silence. Resetting starts a new shift, so the jingle plays again |
 
 The act comes from each manifest's `act` field in `data/manifests.json` (`dock` / `sorting` / `cold` / `executive`). The jingle detunes as the acts progress (`JINGLE_BY_ACT`):
@@ -165,7 +165,7 @@ Three.js r186 is vendored in `vendor/` and resolved through the import map in `i
 
 ## Cache busting
 
-`index.html` loads `css/style.css?v=iso-8`, `js/pwa.js?v=iso-8` and `js/main.js?v=iso-8`. Bump that suffix in all three places when shipping CSS or JS changes so browsers and the Pages CDN fetch fresh copies. The `js/pwa.js` suffix also names the service worker and its offline cache (`sw.js?v=iso-8` → `dont-ship-iso-8`), so a bump replaces the installed worker and drops the old cache. Modules imported by `main.js` have no suffix of their own; the network-first worker still serves them fresh whenever the network is up.
+`index.html` loads `css/style.css?v=iso-9`, `js/pwa.js?v=iso-9` and `js/main.js?v=iso-9`. Bump that suffix in all three places when shipping CSS, JS or audio changes so browsers and the Pages CDN fetch fresh copies. The `js/pwa.js` suffix also names the service worker and its offline cache (`sw.js?v=iso-9` → `dont-ship-iso-9`), so a bump replaces the installed worker and drops the old cache. `js/audio.js` reads the `js/main.js` suffix and requests `assets/audio/<cue>.ogg?v=iso-9`, so re-rendered cues are refetched too. Modules imported by `main.js` have no suffix of their own; the network-first worker still serves them fresh whenever the network is up.
 
 ## Deploy (GitHub Pages)
 

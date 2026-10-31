@@ -765,52 +765,35 @@ def piece_hub():
 COIN_MELODY = [(0, 1, "D5"), (1, .5, "F#5"), (1.5, .5, "A5"), (2, 1, "B5"), (3, 1, "A5"),   # SAVE HU-MAN-I-TY
                (4, 1, "G5"), (5, 1, "F#5"), (6, 1, "E5"), (7, 2, "D5")]
 COIN_HOPE = [(0, 2, "D"), (2, 2, "Gadd9"), (4, 2, "Em7"), (6, 1, "A7"), (7, 2.5, "D")]
-COIN_COLD = [(0, 2, "Bm7"), (2, 2, "Em11"), (4, 2, "Cmaj7#11"), (6, 1, "F#7b9"), (7, 2.5, "Bmadd9")]
 
 
 def piece_coin():
+    """The phrase on warm brass, then the coin is flipped and lands. The cue ends on the landing."""
     rng = np.random.default_rng(4073)
     clk = Clock(92)
-    phrase_len = clk.sec(9)
-    t_coin = phrase_len + 0.3
-    t_cold = t_coin + 2.35
-    mix = Mix(t_cold + phrase_len + 0.5, loop=False, tail=4.0)
+    t_coin = clk.sec(9)
+    t_rest = t_coin + 1.93             # coin_flip's wobble settles 0.78 + 1.15 s after the flick
+    end = t_rest + 1.5
+    mix = Mix(end, loop=False, tail=4.0)
 
-    def phrase(t0, hopeful):
-        for b, d, sym in (COIN_HOPE if hopeful else COIN_COLD):
-            ch = Chord(sym)
-            dur = clk.dur(b, d)
-            for i, m in enumerate(voicing_open(ch, 50)):
-                if hopeful:
-                    mix.add(pad(m, dur, rng, a=0.25, r=1.2, bright=4.5), t0 + clk.sec(b), 0.09,
-                            pan=(-0.35, 0.35)[i % 2], rev=0.35, group="chords")
-                else:
-                    mix.add(pad(m, dur, rng, a=0.5, r=1.6, bright=1.8, detune=16), t0 + clk.sec(b), 0.1,
-                            pan=(-0.5, 0.5)[i % 2], rev=0.55, group="chords")
-            root = nearest(ch.bass, n("D2"), n("A1"), n("A2"))
-            if hopeful:
-                mix.add(upright(root, dur, rng, rel=0.4), t0 + clk.sec(b), 0.55, rev=0.15, group="bass")
-            else:
-                mix.add(synth_bass(root, dur), t0 + clk.sec(b), 0.35, rev=0.2, group="bass")
-        for b, d, nm in COIN_MELODY:
-            m, dur, at = n(nm), clk.dur(b, d), t0 + clk.sec(b)
-            if hopeful:
-                mix.add(brass(m, dur * 0.95, bright=5.0, vib_cents=10), at, 0.42, pan=0.1, rev=0.3, group="melody")
-                mix.add(vibes(m + 12, dur, ring=0.6), at, 0.16, pan=0.3, rev=0.35, group="melody")
-            else:
-                mix.add(glass(m, dur, ring=1.4), at, 0.4, pan=-0.1, rev=0.5, echo=0.2, group="melody")
-                mix.add(glass(m - 12, dur, ratio=1.0, index=0.8, ring=1.0), at, 0.15, pan=0.2, rev=0.4,
-                        group="melody")
-        if not hopeful:
-            for k in range(36):        # the counting machine, 16ths
-                mix.add(woodblock(3100, 1.0 if k % 4 == 0 else 0.55), t0 + clk.sec(k / 4), 0.08,
-                        pan=0.6, rev=0.15, group="ticks")
+    for b, d, sym in COIN_HOPE:
+        ch = Chord(sym)
+        dur = clk.dur(b, d)
+        for i, m in enumerate(voicing_open(ch, 50)):
+            mix.add(pad(m, dur, rng, a=0.25, r=1.2, bright=4.5), clk.sec(b), 0.09,
+                    pan=(-0.35, 0.35)[i % 2], rev=0.35, group="chords")
+        root = nearest(ch.bass, n("D2"), n("A1"), n("A2"))
+        mix.add(upright(root, dur, rng, rel=0.4), clk.sec(b), 0.55, rev=0.15, group="bass")
+    for b, d, nm in COIN_MELODY:
+        m, dur, at = n(nm), clk.dur(b, d), clk.sec(b)
+        mix.add(brass(m, dur * 0.95, bright=5.0, vib_cents=10), at, 0.42, pan=0.1, rev=0.3, group="melody")
+        mix.add(vibes(m + 12, dur, ring=0.6), at, 0.16, pan=0.3, rev=0.35, group="melody")
 
-    phrase(0.0, hopeful=True)
     mix.add(coin_flip(rng), t_coin, 0.6, pan=0.0, rev=0.3, group="coin")
-    phrase(t_cold, hopeful=False)
-    x = mix.render(rt60=2.0, wet=0.3, echo_time=clk.sec(0.75), echo_fb=0.3, seed=13)
-    return master(x, loop=False, drive=1.15), mix
+    mix.add(coin_ting(float(mtof(n("D7"))), rng, tau=0.7, length=1.6), t_rest, 0.3, rev=0.45, group="coin")
+    mix.add(vibes(n("D6"), 0.2, ring=1.0), t_rest, 0.08, pan=0.3, rev=0.45, group="coin")
+    x = mix.render(rt60=2.0, wet=0.3, seed=13)
+    return master(x, loop=False, drive=1.15, max_len=end, fade_out=0.8), mix
 
 
 PORCH_PROG = [("Fmaj7", 4), ("Gm7", 2), ("C7", 2), ("Am7", 2), ("D7", 2), ("Gm7", 2), ("C7", 2),
