@@ -129,6 +129,7 @@ The cues were wired in with Web Audio, with an act-based detune of the company j
 
 - **Shift-clear overlap**: the run bed played under the coin motif, jingles stacked, and the forfeit sting could play twice. The coin motif now plays alone (`9d1cb79`).
 - **"Keep shipping" not resetting shift progress**: the delivery count now resets each shift, the C.O.D. target is the shift's starting bankroll + 100, and SHIFT CLEARED (with the coin motif) shows once per shift (`59ac194`, `?v=iso-6`).
+- **Coin motif ran on past the flip**: the cold B minor bells pass and the counting tick were dropped, so the motif is now the brass phrase, the coin flip, and a final D coin ting (9.3 s, was 16.5 s). Audio URLs now carry the cache-bust suffix (`986c335`, `?v=iso-9`).
 
 ### 16. Mobile and PWA (Oct 30)
 
@@ -168,6 +169,7 @@ A follow-up added proper favicons (a root `favicon.ico` and 16 / 32 px Fen head 
 | Shift progress resets on "Keep shipping" | — | SHIFT CLEARED fired on every run after the first clear; lifetime stats and bests still carry over | Shipped (`59ac194`) |
 | Landscape-first mobile with touch controls | — | The iso stage needs width; a floating stick works wherever the thumb lands | Shipped (`aa2f113`) |
 | Network-first PWA keyed to the cache-bust | — | Online players always get the deployed build; a bump replaces the cache | Shipped (`aa2f113`) |
+| Shift-clear coin motif ends on the landing | Both faces (brass, then cold bells) | User asked for the cue to stop after the coin flip | Shipped (`986c335`) |
 | Source / dataknife.ai links hidden during runs | — | No stray taps on touch devices while playing | Shipped |
 
 ## What was superseded and where it lives
